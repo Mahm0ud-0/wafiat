@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.jsx';
+
+@theme {
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+    --color-primary: #f1f1f1;
+    --color-secondary: #6c121b;
+    --color-bg: #1c1817;
+    --text-2xs: 10px;
+}
+
+* {
+    @apply transition-all duration-300 outline-none;
+}
+
+body {
+    /* background-image: url('../images/bg-shape.png'); */
+    @apply bg-bg bg-[url(../images/bg-shape.png)];
+}
+
+section {
+    @apply w-4/5 mx-auto text-primary;
+}
+
+button,
+.btn {
+    @apply bg-secondary hover:brightness-110 p-4 rounded-lg border-secondary border-2 cursor-pointer text-center hover:opacity-70;
+}
+
+.btn-ghost {
+    @apply bg-transparent border-2 border-primary text-primary hover:bg-primary/5 p-4 rounded-lg cursor-pointer text-center;
+}
+
+input::-webkit-datetime-edit {
+    display: none;
+}
+
+.step-filled {
+    @apply w-12 h-12 rounded-full bg-primary text-bg flex justify-center items-center text-xl;
+}
+
+.step-ghost {
+    @apply w-12 h-12 rounded-full text-primary bg-bg border border-primary flex justify-center items-center text-xl;
+}
