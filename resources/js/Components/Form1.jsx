@@ -1,14 +1,47 @@
 import React, { useContext } from "react";
 import Row from "./Row";
 import Input from "./Input";
-import stepContext from "../stepContext";
+import StepContext from "../stepContext";
 
 const Form1 = ({ data, setData, errors }) => {
-    const { step } = useContext(stepContext);
+    const { step, prevStep, nextStep } = useContext(StepContext);
+
+    // when "Enter" is pressed next step will be called unless it's the last step then form will be submitted
+    // useEffect(() => {
+    //     const handleKeyDown = (event) => {
+    //         if (event.key === "Enter") {
+    //             event.preventDefault(); // Prevent default form submission
+    //             if (step < 5) {
+    //                 nextStep(); // Call function to move to the next step
+    //             } else {
+    //                 submit(event);
+    //             }
+    //         }
+    //     };
+
+    //     window.addEventListener("keydown", handleKeyDown);
+
+    //     return () => {
+    //         window.removeEventListener("keydown", handleKeyDown);
+    //     };
+    // }, [nextStep]);
 
     return (
         step === 1 && (
-            <>
+            <div
+                className="space-y-6"
+                onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                        console.log("test");
+                        // event.preventDefault();
+                        if (step < 5) {
+                            nextStep();
+                        } else {
+                            submit(event);
+                        }
+                    }
+                }}
+            >
                 {/* gender */}
                 <Row>
                     <p className="w-3/4 mx-auto py-2 text-lg flex-1">
@@ -220,7 +253,26 @@ const Form1 = ({ data, setData, errors }) => {
                         placeholder="العمر"
                     />
                 </Row>
-            </>
+                {/* buttons */}
+                <Row className="!justify-end mt-16">
+                    <button
+                        className={`btn-ghost !px-10`}
+                        onClick={prevStep}
+                        type="button"
+                        hidden={step <= 1}
+                    >
+                        السابق
+                    </button>
+
+                    <button
+                        className="!px-10 !bg-primary !border-primary text-bg"
+                        onClick={() => nextStep()}
+                        type="button"
+                    >
+                        التالي
+                    </button>
+                </Row>
+            </div>
         )
     );
 };

@@ -1,5 +1,4 @@
 import { useContext, useRef, useState } from "react";
-import stepContext from "../stepContext";
 import Row from "./Row";
 import edit from "../../images/edit.svg";
 import preveiw from "../../images/preview.svg";
@@ -7,9 +6,10 @@ import plus from "../../images/plus.svg";
 import Modal from "./Modal";
 import Naweh from "./Naweh";
 import AddRelativeForm from "./AddRelativeForm";
+import StepContext from "../stepContext";
 
 const Form4 = ({ data, setData, setError }) => {
-    const { step } = useContext(stepContext);
+    const { step, nextStep, prevStep } = useContext(StepContext);
 
     // for the add relative modal
     const [open, setOpen] = useState(false);
@@ -54,16 +54,6 @@ const Form4 = ({ data, setData, setError }) => {
                         <img src={plus} />
                     </button>
                 </div>
-
-
-
-
-
-
-
-
-
-                
 
                 {/* render relations fields */}
                 <div className="w-3/4 mx-auto space-y-2">
@@ -120,6 +110,7 @@ const Form4 = ({ data, setData, setError }) => {
                 >
                     <AddRelativeForm
                         open={open}
+                        setOpen={setOpen}
                         data={data}
                         setData={setData}
                         setError={setError}
@@ -140,6 +131,24 @@ const Form4 = ({ data, setData, setError }) => {
                 >
                     <Naweh data={data} template={data.template} />
                 </Modal>
+
+                {/* buttons */}
+                <Row className="!justify-end mt-16">
+                    <button
+                        className={`btn-ghost !px-10`}
+                        onClick={prevStep}
+                        type="button"
+                    >
+                        السابق
+                    </button>
+                    <button
+                        className="!px-10 !bg-primary !border-primary text-bg"
+                        onClick={() => nextStep()}
+                        type="button"
+                    >
+                        التالي
+                    </button>
+                </Row>
             </>
         )
     );

@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import stepContext from "../stepContext";
 import Naweh from "./Naweh";
+import StepContext from "../stepContext";
+import Row from "./Row";
 
-const Form5 = ({ data, setData }) => {
-    const { step } = useContext(stepContext);
+const Form5 = ({ data, setData, processing, submit }) => {
+    const { step, prevStep } = useContext(StepContext);
 
     return (
         step === 5 && (
@@ -20,6 +21,26 @@ const Form5 = ({ data, setData }) => {
                     </span>
                     جميع المعلومات التي أدخلتها
                 </p>
+
+                {/* buttons */}
+                <Row className="!justify-end mt-16">
+                    <button
+                        className={`btn-ghost !px-10 ${
+                            step > 1 ? "" : "opacity-0 !cursor-default"
+                        }`}
+                        onClick={prevStep}
+                        type="button"
+                    >
+                        السابق
+                    </button>
+                    <button
+                        className="!px-10 "
+                        type="submit"
+                        disabled={processing}
+                    >
+                        إرسـال
+                    </button>
+                </Row>
             </>
         )
     );

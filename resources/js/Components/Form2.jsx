@@ -1,13 +1,26 @@
 import React, { useContext } from "react";
-import stepContext from "../stepContext";
 import Row from "./Row";
 import Input from "./Input";
+import StepContext from "../stepContext";
 
 const Form2 = ({ data, setData, errors }) => {
-    const { step } = useContext(stepContext);
+    const { step, nextStep, prevStep } = useContext(StepContext);
     return (
         step === 2 && (
-            <>
+            <div
+                className="space-y-6"
+                onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                        console.log("test");
+                        // event.preventDefault();
+                        if (step < 5) {
+                            nextStep();
+                        } else {
+                            submit(event);
+                        }
+                    }
+                }}
+            >
                 <Row
                     error={errors.bodyPlace}
                     example={
@@ -133,7 +146,26 @@ const Form2 = ({ data, setData, errors }) => {
                         placeholder={"معلومات إضافية في تذييل النعوة"}
                     />
                 </Row>
-            </>
+
+                {/* buttons */}
+                <Row className="!justify-end mt-16">
+                    <button
+                        className={`btn-ghost !px-10 `}
+                        onClick={prevStep}
+                        type="button"
+                    >
+                        السابق
+                    </button>
+
+                    <button
+                        className="!px-10 !bg-primary !border-primary text-bg"
+                        onClick={() => nextStep()}
+                        type="button"
+                    >
+                        التالي
+                    </button>
+                </Row>
+            </div>
         )
     );
 };

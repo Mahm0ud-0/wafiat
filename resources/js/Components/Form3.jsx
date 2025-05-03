@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import stepContext from "../stepContext";
 import Naweh from "./Naweh";
+import StepContext from "../stepContext";
+import Row from "./Row";
 
 const Form3 = ({ data, setData }) => {
-    const { step } = useContext(stepContext);
+    const { step, nextStep, prevStep } = useContext(StepContext);
 
     const templates = [
         {
@@ -35,6 +36,7 @@ const Form3 = ({ data, setData }) => {
                         // ? "bg-primary/100 text-bg"
                         // : "hover:bg-primary/10 text-primary/50"
                         <label
+                            key={el.id}
                             htmlFor={el.id}
                             className={`bg-bg p-3 rounded-lg cursor-pointer ${
                                 design == el.id
@@ -58,6 +60,27 @@ const Form3 = ({ data, setData }) => {
                     ))}
                 </div>
                 <Naweh data={data} />
+
+                {/* buttons */}
+                <Row className="!justify-end mt-16">
+                    <button
+                        className={`btn-ghost !px-10 ${
+                            step > 1 ? "" : "opacity-0 !cursor-default"
+                        }`}
+                        onClick={prevStep}
+                        type="button"
+                        hidden={step <= 1}
+                    >
+                        السابق
+                    </button>
+                    <button
+                        className="!px-10 !bg-primary !border-primary text-bg"
+                        onClick={() => nextStep()}
+                        type="button"
+                    >
+                        التالي
+                    </button>
+                </Row>
             </>
         )
     );

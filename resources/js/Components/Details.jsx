@@ -43,7 +43,10 @@ const Details = () => {
                     {/* cards */}
                     <div className="columns-2 space-x-4 space-y-4 flex-1">
                         {features.map((item) => (
-                            <div className="flex flex-col items-center space-y-4 p-4 px-4 bg-bg/40 border-primary/20 hover:bg-bg/80 hover:border-bg border aspect-square rounded-lg h-[300px] w-full">
+                            <div
+                                key={item.title}
+                                className="flex flex-col items-center space-y-4 p-4 px-4 bg-bg/40 border-primary/20 hover:bg-bg/80 hover:border-bg border aspect-square rounded-lg h-[300px] w-full"
+                            >
                                 <div className="w-1/2 flex justify-center pb-4 border-b-2 border-secondary">
                                     <img
                                         src={item.icon}
@@ -71,7 +74,10 @@ const Details = () => {
                 </div>
 
                 {/* button */}
-                <Link className="btn inline-block !px-16 !py-4" href="/new-naweh">
+                <Link
+                    className="btn inline-block !px-16 !py-4"
+                    href="/new-naweh"
+                >
                     كتابة نعوة
                 </Link>
             </div>

@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import stepContext from "../stepContext";
+import StepContext from "../stepContext";
 
 const Heading = () => {
-    const { step } = useContext(stepContext);
+    const { step } = useContext(StepContext);
 
     const textArr = [
         "إنـشـاء نـعـوة لـفـقـيـدكـم",

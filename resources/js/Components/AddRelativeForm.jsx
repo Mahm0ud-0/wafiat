@@ -9,6 +9,7 @@ import plus from "../../images/plus.svg";
 
 const AddRelativeForm = ({
     open,
+    setOpen,
     data,
     setData,
     relations,
@@ -26,11 +27,10 @@ const AddRelativeForm = ({
         relations.splice(index, 1);
         const newRelatives = data.relatives.filter((el) => el.relation !== rel);
         setData("relatives", newRelatives);
-        setOpen(false);
+        // setOpen(false);
     };
 
     const addRelative = () => {
-        console.log("adding relative...");
         try {
             // Validate the `newRelative` object using Yup
             relSchema.validateSync(newRelative, { abortEarly: false }); // Validates all fields
@@ -57,7 +57,6 @@ const AddRelativeForm = ({
             error.inner.forEach((err) => {
                 formattedErrors[err.path] = err.message;
             });
-
             setError(formattedErrors);
         }
     };
@@ -87,34 +86,30 @@ const AddRelativeForm = ({
         setData("relatives", data.relatives);
     };
 
-    // "Enter" keydown listener
-    useEffect(() => {
-        const handleKeyDown = (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault(); // Prevent default form submission
-                event.stopPropagation(); // Prevent parent form from listening to event
-                addRelative();
-                console.log("enter");
-            }
-        };
-
-        window.addEventListener("keydown", handleKeyDown);
-
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, []);
-
     // auto focus on modal when opened
     useEffect(() => {
-        console.log(open);
-        newRelative.relation
-            ? relNameRef.current.focus()
-            : relationRef.current.focus();
+        if (open) {
+            setTimeout(() => {
+                if (newRelative.relation) {
+                    relNameRef.current?.focus();
+                } else {
+                    relationRef.current?.focus();
+                }
+            }, 100);
+        }
     }, [open]);
 
     return (
-        <div className="w-11/12 mx-auto space-y-2">
+        <div
+            className="w-11/12 mx-auto space-y-2"
+            onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                    addRelative();
+                } else if (event.key === "Escape") {
+                    setOpen(false);
+                }
+            }}
+        >
             {/* Relation Input Row */}
             <Row className="mb-6">
                 <Input
@@ -199,7 +194,10 @@ const AddRelativeForm = ({
                     .map((rel, originalIndex) => ({ rel, originalIndex }))
                     .filter(({ rel }) => rel.relation === newRelative.relation)
                     .map(({ rel, originalIndex }, index, arr) => (
-                        <div key={rel.relIndex}>
+                        <div
+                            key={originalIndex}
+                            className="border-b border-primary/30"
+                        >
                             <Row className="py-3 !justify-between !items-center w-full border-t border-primary/30">
                                 <p>
                                     {rel.relSurName} {rel.relName}{" "}

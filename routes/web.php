@@ -13,5 +13,5 @@ Route::get('/new-naweh', function () {
 });
 
 Route::post('/new-naweh', function (Request $request) {
-    return dd($request);
+    return redirect()->back()->with('success', 'form submitted!');
 });
