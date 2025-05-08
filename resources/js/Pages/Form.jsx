@@ -11,6 +11,7 @@ import Form5 from "../Components/Form5";
 import Heading from "../Components/Heading";
 import { step1Schema, step2Schema } from "../validationSchema";
 import StepContext from "../stepContext";
+import Success from "../Components/Success";
 
 const Form = () => {
     const {
@@ -21,7 +22,7 @@ const Form = () => {
         errors,
         setError,
         clearErrors,
-        suc,
+        reset,
     } = useForm({
         gender: "male",
         name: "",
@@ -49,47 +50,16 @@ const Form = () => {
 
     const submit = (e) => {
         e.preventDefault();
-        alert(data);
         post("/new-naweh", {
             onSuccess: setSuccessful(true),
         });
         console.log(data);
     };
+    
 
-    console.log(successful, data, success);
-
-    // const validateStep = () => {
-    //     try {
-    //         if (step === 1) {
-    //             step1Schema.validateSync(data, { abortEarly: false });
-    //         } else if (step === 2) {
-    //             step2Schema.validateSync(data, { abortEarly: false });
-    //         }
-    //         return true; // Validation passed
-    //     } catch (validationError) {
-    //         // Extract and set errors
-    //         const formattedErrors = {};
-    //         validationError.inner.forEach((err) => {
-    //             formattedErrors[err.path] = err.message;
-    //         });
-    //         setError(formattedErrors); // Display errors
-    //         return false; // Validation failed
-    //     }
-    // };
-
-    // function prevStep() {
-    //     setError({}); // Clear previous errors
-    //     step > 1 ? setStep((prev) => prev - 1) : null;
-    // }
-
-    // function changeStep(s) {
-    //     clearErrors();
-    //     const isValid = validateStep();
-    //     if (isValid) {
-    //         setStep(s);
-    //         setError({}); // Clear previous errors
-    //     }
-    // }
+    useEffect(() => {
+        setSuccessful(false); // Reset state when the component is mounted
+    }, []);
 
     return (
         <div className="text-primary py-10 space-y-10 bg-[url(/resources/images/mosque.png)] min-h-screen bg-fixed bg-primary/10 bg-bottom">
@@ -97,47 +67,52 @@ const Form = () => {
                 setError={setError}
                 clearErrors={clearErrors}
                 data={data}
+                reset={reset}
             >
-                <form
-                    className="bg-bg bg-[url(/resources/images/bg-shape.png)] w-1/2 mx-auto  p-10 rounded-lg space-y-6 relative"
-                    onSubmit={submit}
-                >
-                    <Heading />
-                    <Steps />
+                {successful ? (
+                    <Success data={data} />
+                ) : (
+                    <form
+                        className="bg-bg bg-[url(/resources/images/bg-shape.png)] w-1/2 mx-auto  p-10 rounded-lg space-y-6 relative"
+                        onSubmit={submit}
+                    >
+                        <Heading />
+                        <Steps />
 
-                    {/* forms */}
-                    <Form1
-                        data={data}
-                        setData={setData}
-                        errors={errors}
-                        // onEnter={nextStep}
-                    />
-                    <Form2
-                        data={data}
-                        setData={setData}
-                        errors={errors}
-                        // onEnter={nextStep}
-                    />
-                    <Form3
-                        data={data}
-                        setData={setData}
-                        errors={errors}
-                        // onEnter={nextStep}
-                    />
-                    <Form4
-                        data={data}
-                        setData={setData}
-                        setError={setError}
-                        // onEnter={nextStep}
-                    />
-                    <Form5
-                        data={data}
-                        setData={setData}
-                        errors={errors}
-                        processing={processing}
-                        submit={submit}
-                    />
-                </form>
+                        {/* forms */}
+                        <Form1
+                            data={data}
+                            setData={setData}
+                            errors={errors}
+                            // onEnter={nextStep}
+                        />
+                        <Form2
+                            data={data}
+                            setData={setData}
+                            errors={errors}
+                            // onEnter={nextStep}
+                        />
+                        <Form3
+                            data={data}
+                            setData={setData}
+                            errors={errors}
+                            // onEnter={nextStep}
+                        />
+                        <Form4
+                            data={data}
+                            setData={setData}
+                            setError={setError}
+                            // onEnter={nextStep}
+                        />
+                        <Form5
+                            data={data}
+                            setData={setData}
+                            errors={errors}
+                            processing={processing}
+                            submit={submit}
+                        />
+                    </form>
+                )}
             </StepProvider>
         </div>
     );

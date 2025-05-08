@@ -1,9 +1,15 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { step1Schema, step2Schema } from "./validationSchema";
 
 const StepContext = createContext();
 
-export const StepProvider = ({ children, data, setError, clearErrors }) => {
+export const StepProvider = ({
+    children,
+    data,
+    setError,
+    clearErrors,
+    reset,
+}) => {
     const [step, setStep] = useState(1);
 
     const validateStep = () => {
@@ -38,32 +44,12 @@ export const StepProvider = ({ children, data, setError, clearErrors }) => {
         if (step > 1) setStep((prev) => prev - 1);
     };
 
-    const changeStep = (newStep, data, stepSchemas, clearErrors) => {
+    const changeStep = (newStep) => {
         clearErrors();
-        const isValid = validateStep(data, stepSchemas, step);
-        if (isValid) {
-            setStep(newStep);
-        }
+        reset();
+        console.log(step)
+        setStep(newStep);
     };
-
-    // useEffect(() => {
-    //     const handleKeyDown = (event) => {
-    //         if (event.key === "Enter") {
-    //             event.preventDefault();
-    //             if (step < 5) {
-    //                 nextStep();
-    //             } else {
-    //                 // submit function should be passed in the consuming component
-    //             }
-    //         }
-    //     };
-
-    //     window.addEventListener("keydown", handleKeyDown);
-
-    //     return () => {
-    //         window.removeEventListener("keydown", handleKeyDown);
-    //     };
-    // }, [step]);
 
     return (
         <StepContext.Provider value={{ step, nextStep, prevStep, changeStep }}>

@@ -32,7 +32,6 @@ const Form1 = ({ data, setData, errors }) => {
                 className="space-y-6"
                 onKeyDown={(event) => {
                     if (event.key === "Enter") {
-                        console.log("test");
                         // event.preventDefault();
                         if (step < 5) {
                             nextStep();
@@ -104,7 +103,7 @@ const Form1 = ({ data, setData, errors }) => {
                     <Row error={errors.name}>
                         <Input
                             autoFocus
-                            hasError={errors.name}
+                            haserror={errors.name}
                             type="text"
                             name="name"
                             value={data.name}
@@ -120,7 +119,7 @@ const Form1 = ({ data, setData, errors }) => {
                     {/* father name */}
                     <Row error={errors.fatherName}>
                         <Input
-                            hasError={errors.fatherName}
+                            haserror={errors.fatherName}
                             type="text"
                             name="fatherName"
                             value={data.fatherName}
@@ -133,7 +132,7 @@ const Form1 = ({ data, setData, errors }) => {
                     {/* last name */}
                     <Row error={errors.lastName}>
                         <Input
-                            hasError={errors.lastName}
+                            haserror={errors.lastName}
                             type="text"
                             name="lastName"
                             value={data.lastName}
@@ -157,7 +156,7 @@ const Form1 = ({ data, setData, errors }) => {
                         }
                     >
                         <Input
-                            hasError={errors.title}
+                            haserror={errors.title}
                             type="text"
                             name="title"
                             value={data.title}
@@ -184,7 +183,7 @@ const Form1 = ({ data, setData, errors }) => {
                         }
                     >
                         <Input
-                            hasError={errors.surName}
+                            haserror={errors.surName}
                             type="text"
                             name="surName"
                             value={data.surName}
@@ -214,7 +213,7 @@ const Form1 = ({ data, setData, errors }) => {
                 </Row>
                 <Row error={errors.dateOfDeath}>
                     <Input
-                        hasError={errors.dateOfDeath}
+                        haserror={errors.dateOfDeath}
                         type="text"
                         name="dateOfDeath"
                         value={data.dateOfDeath}
@@ -245,7 +244,7 @@ const Form1 = ({ data, setData, errors }) => {
                 </Row>
                 <Row error={errors.age}>
                     <Input
-                        hasError={errors.age}
+                        haserror={errors.age}
                         type="number"
                         name="age"
                         value={data.age}

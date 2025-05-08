@@ -32,7 +32,7 @@ const Form2 = ({ data, setData, errors }) => {
                 >
                     <Input
                         autoFocus
-                        hasError={errors.bodyPlace}
+                        haserror={errors.bodyPlace}
                         type="text"
                         name="bodyPlace"
                         value={data.bodyPlace}
@@ -53,7 +53,7 @@ const Form2 = ({ data, setData, errors }) => {
                         error={errors.cemetery}
                     >
                         <Input
-                            hasError={errors.cemetery}
+                            haserror={errors.cemetery}
                             type="text"
                             name="cemetery"
                             value={data.cemetery}
@@ -69,7 +69,7 @@ const Form2 = ({ data, setData, errors }) => {
                         error={errors.funiralDate}
                     >
                         <Input
-                            hasError={errors.funiralDate}
+                            haserror={errors.funiralDate}
                             type="text"
                             name="funiralDate"
                             value={data.funiralDate}
@@ -95,7 +95,7 @@ const Form2 = ({ data, setData, errors }) => {
                     error={errors.prayer}
                 >
                     <Input
-                        hasError={errors.prayer}
+                        haserror={errors.prayer}
                         type="text"
                         name="prayer"
                         value={data.prayer}
@@ -110,7 +110,7 @@ const Form2 = ({ data, setData, errors }) => {
                         الخميس من الساعة 6:30 و حتى الساعة 9 مساءً"
                 >
                     <Input
-                        hasError={errors.menPlace}
+                        haserror={errors.menPlace}
                         type="text"
                         name="menPlace"
                         value={data.menPlace}
@@ -129,7 +129,7 @@ const Form2 = ({ data, setData, errors }) => {
                     }
                 >
                     <Input
-                        hasError={errors.womenPlace}
+                        haserror={errors.womenPlace}
                         type="text"
                         name="womenPlace"
                         value={data.womenPlace}

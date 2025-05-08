@@ -36,7 +36,7 @@ const Form4 = ({ data, setData, setError }) => {
                     <button
                         title="معاينة"
                         type="button"
-                        className="w-10 h-10 !p-0 justify-center items-center flex !bg-primary !border-primary border"
+                        className="!w-10 h-10 !p-0 justify-center items-center flex !bg-primary !border-primary border"
                         onClick={() => setPreveiw(true)}
                     >
                         <img src={preveiw} />
@@ -49,7 +49,7 @@ const Form4 = ({ data, setData, setError }) => {
                             setOpen(true);
                         }}
                         type="button"
-                        className="w-10 h-10 !p-0 justify-center items-center flex"
+                        className="!w-10 h-10 !p-0 justify-center items-center flex"
                     >
                         <img src={plus} />
                     </button>
@@ -71,7 +71,7 @@ const Form4 = ({ data, setData, setError }) => {
                                 </h3>
                                 <button
                                     title="تعديل"
-                                    className="!p-2"
+                                    className="!p-2 !w-auto"
                                     type="button"
                                     onClick={() => {
                                         setNewRelative((prev) => ({

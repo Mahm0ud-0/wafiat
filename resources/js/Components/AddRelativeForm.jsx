@@ -88,15 +88,15 @@ const AddRelativeForm = ({
 
     // auto focus on modal when opened
     useEffect(() => {
-        if (open) {
-            setTimeout(() => {
+        setTimeout(() => {
+            if (open) {
                 if (newRelative.relation) {
                     relNameRef.current?.focus();
                 } else {
                     relationRef.current?.focus();
                 }
-            }, 100);
-        }
+            }
+        }, 160);
     }, [open]);
 
     return (
@@ -114,6 +114,7 @@ const AddRelativeForm = ({
             <Row className="mb-6">
                 <Input
                     ref={relationRef}
+                    autoFocus
                     name="relation"
                     value={newRelative.relation}
                     onChange={(e) =>
@@ -126,7 +127,7 @@ const AddRelativeForm = ({
                     className="placeholder:text-center text-center"
                 />
                 <button
-                    className={`disabled:opacity-50 disabled:hover:!brightness-100 disabled:!cursor-default`}
+                    className={`disabled:opacity-50 disabled:hover:!brightness-100 disabled:!cursor-default !w-auto`}
                     disabled={!newRelative.relation || !open}
                     type="button"
                     onClick={() => deleteRelation(newRelative.relation)}
@@ -162,6 +163,7 @@ const AddRelativeForm = ({
                         placeholder="الاسم"
                         className="placeholder:text-center"
                         ref={relNameRef}
+                        autoFocus
                     />
                     <Input
                         name="relLastName"
@@ -179,7 +181,7 @@ const AddRelativeForm = ({
 
                 {/* Add Relative Button */}
                 <button
-                    className="!p-4"
+                    className="!p-4 !w-auto"
                     disabled={!open}
                     type="button"
                     onClick={addRelative}
@@ -208,7 +210,7 @@ const AddRelativeForm = ({
                                 <div className="space-x-2 flex items-center">
                                     {/* Move Down */}
                                     <button
-                                        className="w-8 !p-1"
+                                        className="!w-8 !p-1"
                                         type="button"
                                         onClick={() => {
                                             let index2;
@@ -229,7 +231,7 @@ const AddRelativeForm = ({
 
                                     {/* Move Up */}
                                     <button
-                                        className="w-8 !p-1"
+                                        className="!w-8 !p-1"
                                         type="button"
                                         onClick={() => {
                                             let index2;
@@ -250,7 +252,7 @@ const AddRelativeForm = ({
 
                                     {/* Delete Relative */}
                                     <button
-                                        className="w-8 !p-1.5"
+                                        className="!w-8 !p-1.5"
                                         type="button"
                                         onClick={() =>
                                             deleteRelative(originalIndex)

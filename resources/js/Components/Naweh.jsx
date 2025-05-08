@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const Naweh = ({ data }) => {
+const Naweh = ({ data, classname, width, height }) => {
     const groupedRelatives = data.relatives.reduce((acc, relative) => {
         const { relation } = relative;
         if (!acc[relation]) {
@@ -46,8 +46,10 @@ const Naweh = ({ data }) => {
 
     return (
         <div
+            width={width ?? width}
+            height={height ?? height}
             style={{ backgroundImage: `url(${data.template.path})` }}
-            className={`bg-cover bg-center text-black px-7 py-14 mx-auto w-[440px] h-[566px] flex flex-col justify-between`}
+            className={`bg-cover bg-center object-contain text-black px-7 py-14 mx-auto w-[440px] h-[566px] flex flex-col justify-between`}
         >
             {/* relatives section */}
             <div className="" ref={containerRef}>
@@ -64,11 +66,11 @@ const Naweh = ({ data }) => {
                 )}
                 {Object.entries(groupedRelatives).map(([relation, rels]) => (
                     <div key={relation}>
-                        <p
+                        <div
                             style={{ fontSize: `${fontSize}px` }}
                             className="flex gap-2"
                         >
-                            <span className="font-bold whitespace-nowrap">
+                            <span className="font-bold whitespace-nowrap ">
                                 {relation}{" "}
                                 {data.gender === "female"
                                     ? " الفقيدة"
@@ -77,7 +79,7 @@ const Naweh = ({ data }) => {
                             </span>
                             <p>
                                 {rels.map((rel, index) => (
-                                    <span>
+                                    <span key={index}>
                                         {rel.relSurName || ""} {rel.relName}
                                         {/* display the last name only if it doesn't match the next relative last name */}
                                         {rel?.relLastName !==
@@ -91,7 +93,7 @@ const Naweh = ({ data }) => {
                                     </span>
                                 ))}
                             </p>
-                        </p>
+                        </div>
                     </div>
                 ))}
             </div>
