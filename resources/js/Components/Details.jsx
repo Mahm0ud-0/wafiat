@@ -75,7 +75,7 @@ const Details = () => {
 
                 {/* button */}
                 <Link
-                    className="btn inline-block !px-16 !py-4"
+                    className="inline-block btn"
                     href="/new-naweh"
                 >
                     كتابة نعوة

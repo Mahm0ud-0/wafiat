@@ -2,29 +2,10 @@ import React, { useContext } from "react";
 import Row from "./Row";
 import Input from "./Input";
 import StepContext from "../stepContext";
+import { router } from "@inertiajs/react";
 
 const Form1 = ({ data, setData, errors }) => {
     const { step, prevStep, nextStep } = useContext(StepContext);
-
-    // when "Enter" is pressed next step will be called unless it's the last step then form will be submitted
-    // useEffect(() => {
-    //     const handleKeyDown = (event) => {
-    //         if (event.key === "Enter") {
-    //             event.preventDefault(); // Prevent default form submission
-    //             if (step < 5) {
-    //                 nextStep(); // Call function to move to the next step
-    //             } else {
-    //                 submit(event);
-    //             }
-    //         }
-    //     };
-
-    //     window.addEventListener("keydown", handleKeyDown);
-
-    //     return () => {
-    //         window.removeEventListener("keydown", handleKeyDown);
-    //     };
-    // }, [nextStep]);
 
     return (
         step === 1 && (
@@ -253,14 +234,13 @@ const Form1 = ({ data, setData, errors }) => {
                     />
                 </Row>
                 {/* buttons */}
-                <Row className="!justify-end mt-16">
+                <Row className="!justify-between mt-16">
                     <button
-                        className={`btn-ghost !px-10`}
-                        onClick={prevStep}
+                        className={`btn-ghost`}
+                        onClick={() => router.visit("/")}
                         type="button"
-                        hidden={step <= 1}
                     >
-                        السابق
+                        الصفحة الرئيسية
                     </button>
 
                     <button

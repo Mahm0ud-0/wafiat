@@ -10,40 +10,86 @@ const Success = ({ data }) => {
     const { changeStep } = useContext(StepContext);
 
     const download = () => {
-        if (nawehRef.current === null) {
-            return;
-        }
+        const element = document.getElementById("capture-area");
+        if (!element) return;
 
         document.fonts.ready.then(() => {
-            toBlob(nawehRef.current, {
-                cacheBust: true,
-                pixelRatio: 5,
-            }).then((blob) => {
-                const link = document.createElement("a");
-                link.download = "A4-image.png";
-                link.href = URL.createObjectURL(blob);
-                link.click();
-            });
+            toCanvas(nawehRef.current, { cacheBust: true, pixelRatio: 8 }).then(
+                (canvas) => {
+                    const link = document.createElement("a");
+                    link.download = "A4-image.png";
+                    link.href = canvas.toDataURL("image/png");
+                    link.click();
+                }
+            );
         });
     };
 
+    const share = () => {
+        if (!nawehRef.current) {
+            return;
+        }
+
+        if (navigator.canShare) {
+            document.fonts.ready.then(() => {
+                toBlob(nawehRef.current, {
+                    cacheBust: true,
+                    pixelRatio: 8,
+                }).then((blob) => {
+                    const file = new File([blob], "naweh.png", {
+                        type: "image/png",
+                    });
+
+                    if (navigator.canShare({ files: [file] })) {
+                        navigator
+                            .share({
+                                files: [file],
+                                title: "تم إرسال النعوة بنجاح",
+                                text: "شاهد هذه النعوة!",
+                            })
+                            .then(() =>
+                                console.log("Image shared successfully")
+                            )
+                            .catch((error) =>
+                                console.log("Error sharing:", error)
+                            );
+                    } else {
+                        alert("المشاركة غير مدعومة على هذا الجهاز.");
+                    }
+                });
+            });
+        } else {
+            alert("Web Share API لا يدعم مشاركة الملفات على هذا المتصفح.");
+        }
+    };
+
     const backToHomePage = () => {
-        console.log("test");
         changeStep(1);
         router.visit("/");
     };
 
     const newNaweh = () => {
         changeStep(1);
-        router.visit("/new-naweh");
+        // router.visit("/new-naweh");
     };
 
     return (
-        <div className="bg-bg bg-[url(/resources/images/bg-shape.png)] w-1/2 mx-auto  p-10 rounded-lg space-y-6 relative">
+        <div className="bg-bg bg-[url(/resources/images/bg-shape.png)] w-1/2 mx-auto flex flex-col items-center p-10 rounded-lg space-y-6 relative">
             <h1 className="text-3xl mb-10">تم إرسال النعوة بنجاح</h1>
-            <div ref={nawehRef}>
-                <Naweh data={data} width={"100%"} height={"100%"} />
+            <div
+                id="capture-area"
+                style={{
+                    display: "inline-block",
+                    width: "440px",
+                    height: "566px",
+                    background: "white",
+                }}
+            >
+                <div ref={nawehRef} className="w-full h-full">
+                    <Naweh data={data} />
+                </div>
             </div>
+
             <div className="w-full flex justify-evenly">
                 <button onClick={backToHomePage} className="btn-ghost">
                     الصفحة الرئيسية
@@ -51,7 +97,9 @@ const Success = ({ data }) => {
                 <button onClick={newNaweh} className="btn-ghost">
                     إنشاء نعوة
                 </button>
-                <button className=" btn-ghost">مشاركة</button>
+                <button className=" btn-ghost" onClick={share}>
+                    مشاركة
+                </button>
                 <button className="" onClick={download}>
                     تحميل
                 </button>

@@ -45,10 +45,9 @@ export const StepProvider = ({
     };
 
     const changeStep = (newStep) => {
+        setStep(newStep);
         clearErrors();
         reset();
-        console.log(step)
-        setStep(newStep);
     };
 
     return (

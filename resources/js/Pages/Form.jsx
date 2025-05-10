@@ -1,6 +1,5 @@
 import { useForm, usePage } from "@inertiajs/react";
-import { useContext, useEffect, useState } from "react";
-import Row from "../Components/Row";
+import { useEffect, useState } from "react";
 import Steps from "../Components/Steps";
 import { StepProvider } from "../stepContext";
 import Form1 from "../Components/Form1";
@@ -9,11 +8,10 @@ import Form3 from "../Components/Form3";
 import Form4 from "../Components/Form4";
 import Form5 from "../Components/Form5";
 import Heading from "../Components/Heading";
-import { step1Schema, step2Schema } from "../validationSchema";
-import StepContext from "../stepContext";
+
 import Success from "../Components/Success";
 
-const Form = () => {
+const Form = () => {2
     const {
         data,
         setData,
@@ -44,18 +42,17 @@ const Form = () => {
         relatives: [],
     });
 
-    const { success } = usePage().props;
+    // const { success } = usePage().props;
 
     const [successful, setSuccessful] = useState(false);
 
     const submit = (e) => {
         e.preventDefault();
         post("/new-naweh", {
-            onSuccess: setSuccessful(true),
+            onSuccess: () => setSuccessful(true),
         });
         console.log(data);
     };
-    
 
     useEffect(() => {
         setSuccessful(false); // Reset state when the component is mounted

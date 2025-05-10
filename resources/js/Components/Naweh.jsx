@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const Naweh = ({ data, classname, width, height }) => {
+const Naweh = ({ data, classname }) => {
     const groupedRelatives = data.relatives.reduce((acc, relative) => {
         const { relation } = relative;
         if (!acc[relation]) {
@@ -46,8 +46,6 @@ const Naweh = ({ data, classname, width, height }) => {
 
     return (
         <div
-            width={width ?? width}
-            height={height ?? height}
             style={{ backgroundImage: `url(${data.template.path})` }}
             className={`bg-cover bg-center object-contain text-black px-7 py-14 mx-auto w-[440px] h-[566px] flex flex-col justify-between`}
         >
@@ -148,7 +146,10 @@ const Naweh = ({ data, classname, width, height }) => {
                 {/* prayer */}
                 <p className="mt-1 text-2xs flex gap-2">
                     <span className="font-bold text-nowrap">
-                        الــصــلاة عــلــيـــه:{" "}
+                    {data.gender == "male"
+                        ? "الــصــلاة عــلــيـــه: " :
+                        "الــصــلاة عــلــيـــها: "
+                    }
                     </span>
                     {data.prayer}
                 </p>
