@@ -1,10 +1,10 @@
 import { useContext, useRef } from "react";
 import Naweh from "./Naweh";
-import { toBlob, toCanvas, toJpeg, toPng } from "html-to-image";
+import { toBlob, toCanvas } from "html-to-image";
 import { Link, router } from "@inertiajs/react";
 import StepContext from "../stepContext";
 
-const Success = ({ data }) => {
+const Success = ({ data, reset, setSuccessful }) => {
     const nawehRef = useRef(null);
 
     const { changeStep } = useContext(StepContext);
@@ -66,10 +66,13 @@ const Success = ({ data }) => {
     const backToHomePage = () => {
         changeStep(1);
         router.visit("/");
+        reset();
     };
 
     const newNaweh = () => {
+        setSuccessful(false);
         changeStep(1);
+        reset();
         // router.visit("/new-naweh");
     };
 

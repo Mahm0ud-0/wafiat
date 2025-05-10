@@ -11,7 +11,8 @@ import Heading from "../Components/Heading";
 
 import Success from "../Components/Success";
 
-const Form = () => {2
+const Form = () => {
+    2;
     const {
         data,
         setData,
@@ -64,10 +65,9 @@ const Form = () => {2
                 setError={setError}
                 clearErrors={clearErrors}
                 data={data}
-                reset={reset}
             >
                 {successful ? (
-                    <Success data={data} />
+                    <Success data={data} reset={reset} setSuccessful={setSuccessful}/>
                 ) : (
                     <form
                         className="bg-bg bg-[url(/resources/images/bg-shape.png)] w-1/2 mx-auto  p-10 rounded-lg space-y-6 relative"

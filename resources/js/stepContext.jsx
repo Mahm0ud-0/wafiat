@@ -3,13 +3,7 @@ import { step1Schema, step2Schema } from "./validationSchema";
 
 const StepContext = createContext();
 
-export const StepProvider = ({
-    children,
-    data,
-    setError,
-    clearErrors,
-    reset,
-}) => {
+export const StepProvider = ({ children, data, setError, clearErrors }) => {
     const [step, setStep] = useState(1);
 
     const validateStep = () => {
@@ -36,7 +30,7 @@ export const StepProvider = ({
         const isValid = validateStep();
         if (isValid) {
             setStep((prev) => prev + 1);
-            setError({}); // Clear previous errors
+            clearErrors(); // Clear previous errors
         }
     };
 
@@ -45,9 +39,17 @@ export const StepProvider = ({
     };
 
     const changeStep = (newStep) => {
-        setStep(newStep);
         clearErrors();
-        reset();
+        if (newStep > step) {
+            const isValid = validateStep();
+            if (isValid) {
+                setStep(newStep);
+                clearErrors();
+                // reset();
+            }
+        } else {
+            setStep(newStep);
+        }
     };
 
     return (
