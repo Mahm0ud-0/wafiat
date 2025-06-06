@@ -3,6 +3,7 @@ import Naweh from "./Naweh";
 import { toBlob, toCanvas } from "html-to-image";
 import { Link, router } from "@inertiajs/react";
 import StepContext from "../stepContext";
+import { baseURL } from "../helpers";
 
 const Success = ({ data, reset, setSuccessful }) => {
     const nawehRef = useRef(null);
@@ -10,9 +11,6 @@ const Success = ({ data, reset, setSuccessful }) => {
     const { changeStep } = useContext(StepContext);
 
     const download = () => {
-        const element = document.getElementById("capture-area");
-        if (!element) return;
-
         document.fonts.ready.then(() => {
             toCanvas(nawehRef.current, { cacheBust: true, pixelRatio: 8 }).then(
                 (canvas) => {
@@ -64,48 +62,38 @@ const Success = ({ data, reset, setSuccessful }) => {
     };
 
     const backToHomePage = () => {
-        changeStep(1);
-        router.visit("/");
-        reset();
+        router.visit(baseURL + "/").then(() => {
+            reset();
+        });
     };
 
     const newNaweh = () => {
         setSuccessful(false);
         changeStep(1);
         reset();
-        // router.visit("/new-naweh");
     };
 
     return (
-        <div className="bg-bg bg-[url(/resources/images/bg-shape.png)] w-1/2 mx-auto flex flex-col items-center p-10 rounded-lg space-y-6 relative">
-            <h1 className="text-3xl mb-10">تم إرسال النعوة بنجاح</h1>
-            <div
-                id="capture-area"
-                style={{
-                    display: "inline-block",
-                    width: "440px",
-                    height: "566px",
-                    background: "white",
-                }}
-            >
+        <div className="bg-bg bg-[url(/resources/images/bg-shape.png)] sm:w-4/5 xl:w-1/2 mx-auto flex flex-col p-5 md:p-10 rounded-lg space-y-6 relative">
+            <h1 className="text-lg sm:text-3xl mb-10">تم إرسال النعوة بنجاح</h1>
                 <div ref={nawehRef} className="w-full h-full">
                     <Naweh data={data} />
                 </div>
-            </div>
 
-            <div className="w-full flex justify-evenly">
+            <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2">
                 <button onClick={backToHomePage} className="btn-ghost">
-                    الصفحة الرئيسية
+                    الرئيسية
                 </button>
-                <button onClick={newNaweh} className="btn-ghost">
+                <button onClick={newNaweh} className="btn-ghost text-sm">
                     إنشاء نعوة
                 </button>
-                <button className=" btn-ghost" onClick={share}>
+                <button
+                    onClick={share}
+                    className="!bg-primary text-bg !border-primary"
+                >
                     مشاركة
                 </button>
-                <button className="" onClick={download}>
-                    تحميل
-                </button>
+                <button onClick={download}>تحميل</button>
             </div>
         </div>
     );

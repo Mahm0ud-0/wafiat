@@ -1,5 +1,5 @@
-import { useForm, usePage } from "@inertiajs/react";
-import { useEffect, useState } from "react";
+import { Head, useForm } from "@inertiajs/react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Steps from "../Components/Steps";
 import { StepProvider } from "../stepContext";
 import Form1 from "../Components/Form1";
@@ -8,11 +8,11 @@ import Form3 from "../Components/Form3";
 import Form4 from "../Components/Form4";
 import Form5 from "../Components/Form5";
 import Heading from "../Components/Heading";
-
 import Success from "../Components/Success";
+import ActiveStep from "../Components/ActiveStep";
+import { baseURL } from "../helpers";
 
 const Form = () => {
-    2;
     const {
         data,
         setData,
@@ -37,76 +37,73 @@ const Form = () => {
         funiralDate: "",
         prayer: "",
         menPlace: "",
+        menTime: "",
+        menDate: "",
+        menNumOfDays: "",
         womenPlace: "",
+        womenTime: "",
+        womenDate: "",
+        womenNumOfDays: "",
         info: "",
         template: "",
         relatives: [],
+        lastNames: [],
     });
-
-    // const { success } = usePage().props;
 
     const [successful, setSuccessful] = useState(false);
 
-    const submit = (e) => {
-        e.preventDefault();
-        post("/new-naweh", {
-            onSuccess: () => setSuccessful(true),
-        });
-        console.log(data);
-    };
+    const submit = useCallback(
+        (e) => {
+            e.preventDefault();
+            post(baseURL + "/new-naweh", {
+                onSuccess: () => setSuccessful(true),
+                onError: (errors) => console.error("Failed:", errors),
+            });
+        },
+        [post]
+    );
 
     useEffect(() => {
-        setSuccessful(false); // Reset state when the component is mounted
-    }, []);
+        if (data) setSuccessful(false);
+    }, [data]);
+
+    const stepContextProps = useMemo(
+        () => ({
+            setError,
+            clearErrors,
+            data,
+        }),
+        [setError, clearErrors, data]
+    );
 
     return (
         <div className="text-primary py-10 space-y-10 bg-[url(/resources/images/mosque.png)] min-h-screen bg-fixed bg-primary/10 bg-bottom">
-            <StepProvider
-                setError={setError}
-                clearErrors={clearErrors}
-                data={data}
-            >
+            <Head title="إنشاء نعوة"/>
+            <StepProvider {...stepContextProps}>
                 {successful ? (
-                    <Success data={data} reset={reset} setSuccessful={setSuccessful}/>
+                    <Success
+                        data={data}
+                        reset={reset}
+                        setSuccessful={setSuccessful}
+                    />
                 ) : (
                     <form
-                        className="bg-bg bg-[url(/resources/images/bg-shape.png)] w-1/2 mx-auto  p-10 rounded-lg space-y-6 relative"
+                        className="bg-bg bg-[url(/resources/images/bg-shape.png)] sm:w-4/5 lg:w-1/2 mx-auto p-5 sm:p-10 rounded-lg space-y-6 relative"
                         onSubmit={submit}
                     >
                         <Heading />
+
+                        {/* step indicator */}
                         <Steps />
 
                         {/* forms */}
-                        <Form1
-                            data={data}
-                            setData={setData}
-                            errors={errors}
-                            // onEnter={nextStep}
-                        />
-                        <Form2
-                            data={data}
-                            setData={setData}
-                            errors={errors}
-                            // onEnter={nextStep}
-                        />
-                        <Form3
-                            data={data}
-                            setData={setData}
-                            errors={errors}
-                            // onEnter={nextStep}
-                        />
-                        <Form4
-                            data={data}
-                            setData={setData}
-                            setError={setError}
-                            // onEnter={nextStep}
-                        />
-                        <Form5
+                        <ActiveStep
                             data={data}
                             setData={setData}
                             errors={errors}
                             processing={processing}
                             submit={submit}
+                            setError={setError}
                         />
                     </form>
                 )}

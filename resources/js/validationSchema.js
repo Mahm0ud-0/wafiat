@@ -61,10 +61,32 @@ const step2Schema = Yup.object().shape({
     // .max(new Date(), "يجب ألا يكون التاريخ في المستقبل"),
 
     prayer: Yup.string().required("هذا الحقل مطلوب"),
+});
 
-    menPlace: Yup.string().required("هذا الحقل مطلوب"),
+const step3Schema = Yup.object().shape({
+    // men
+    menPlace: Yup.string().min(15).required("هذا الحقل مطلوب"),
+    menTime: Yup.string().min(20).required("هذا الحقل مطلوب"),
+    menDate: Yup.date()
+        .typeError("يجب أن يكون تاريخ الجنازة تاريخًا صحيحًا")
+        .required("هذا الحقل مطلوب"),
+    menNumOfDays: Yup.number()
+        .required("هذا الحقل مطلوب")
+        .typeError("يجب أن يكون العمر رقمًا")
+        .integer("يجب أن يكون العمر عددًا صحيحًا")
+        .positive("يجب أن يكون العمر عددًا موجبًا"),
 
+    // women
     womenPlace: Yup.string().required("هذا الحقل مطلوب"),
+    womenTime: Yup.string().min(20).required("هذا الحقل مطلوب"),
+    womenDate: Yup.date()
+        .typeError("يجب أن يكون تاريخ الجنازة تاريخًا صحيحًا")
+        .required("هذا الحقل مطلوب"),
+    womenNumOfDays: Yup.number()
+        .required("هذا الحقل مطلوب")
+        .typeError("يجب أن يكون العمر رقمًا")
+        .integer("يجب أن يكون العمر عددًا صحيحًا")
+        .positive("يجب أن يكون العمر عددًا موجبًا"),
 });
 
 const relSchema = Yup.object().shape({
@@ -85,14 +107,14 @@ const relSchema = Yup.object().shape({
             "يجب أن يحتوي اللقب على حرفين على الأقل",
             (value) => {
                 if (!value) return true; // Skip validation if field is empty
-                return value.length >= 2 && value.length <= 10; // Apply validation if field has value
+                return value.length >= 2 && value.length <= 10; // Apply validation if field has value between 2 & 10 chars
             }
         ),
 
     relation: Yup.string()
         .min(2, "يجب أن تحتوي العلاقة على حرفين على الأقل")
-        .max(10, "يجب ألا تزيد العلاقة عن 10 أحرف")
+        .max(20, "يجب ألا تزيد العلاقة عن 10 أحرف")
         .required("هذا الحقل مطلوب"),
 });
 
-export { step1Schema, step2Schema, relSchema };
+export { step1Schema, step2Schema, step3Schema, relSchema };

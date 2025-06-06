@@ -4,6 +4,7 @@ import icon1 from "../../images/icon1.svg";
 import icon2 from "../../images/icon2.svg";
 import icon3 from "../../images/icon3.svg";
 import icon4 from "../../images/icon4.svg";
+import { baseURL } from "../helpers";
 
 const Details = () => {
     const features = [
@@ -41,7 +42,7 @@ const Details = () => {
                 </div>
                 <div className="flex items-center">
                     {/* cards */}
-                    <div className="columns-2 space-x-4 space-y-4 flex-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 space-x-4 space-y-4 flex-1">
                         {features.map((item) => (
                             <div
                                 key={item.title}
@@ -64,7 +65,7 @@ const Details = () => {
                         ))}
                     </div>
 
-                    <div className="flex-1">
+                    <div className="flex-1 hidden lg:block">
                         <img
                             src={naweh}
                             alt=""
@@ -76,7 +77,7 @@ const Details = () => {
                 {/* button */}
                 <Link
                     className="inline-block btn"
-                    href="/new-naweh"
+                    href={baseURL + "/new-naweh"}
                 >
                     كتابة نعوة
                 </Link>

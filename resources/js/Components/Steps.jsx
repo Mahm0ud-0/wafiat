@@ -3,9 +3,9 @@ import StepContext from "../stepContext";
 
 const Steps = () => {
     const activeStep = useContext(StepContext);
-    const steps = [1, 2, 3, 4, 5];
+    const steps = [1, 2, 3, 4, 5, 6];
     return (
-        <div className="relative w-1/2 mx-auto mb-10">
+        <div className="relative md:w-2/3 mx-auto mb-10">
             <div className="flex justify-between relative z-10">
                 {steps.map((step) => (
                     <div
