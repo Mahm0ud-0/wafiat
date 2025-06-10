@@ -22,6 +22,7 @@
 body {
     /* background-image: url('../images/bg-shape.png'); */
     @apply bg-bg bg-[url(../images/bg-shape.png)];
+    interpolate-size: allow-keywords;
 }
 
 section {

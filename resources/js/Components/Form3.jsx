@@ -21,7 +21,7 @@ const Form3 = ({ data, setData, errors }) => {
             {/* men condolences */}
             <div
                 className={`flex flex-col gap-5 overflow-hidden ${
-                    menFold ? "max-h-12" : "min-h-[375px]"
+                    menFold ? "h-12" : "h-auto"
                 }`}
             >
                 <div
@@ -107,7 +107,7 @@ const Form3 = ({ data, setData, errors }) => {
             {/* women condolences */}
             <div
                 className={`flex flex-col gap-5 overflow-hidden ${
-                    womenFold ? "max-h-12" : "min-h-[375px]"
+                    womenFold ? "h-12" : "h-auto"
                 }`}
             >
                 <div
