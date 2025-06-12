@@ -197,7 +197,7 @@ const AddRelativeForm = ({
         >
             {/* heading & buttons */}
             <div className="flex justify-between items-center mb-10">
-                <h1 className="text-xl sm:text-4xl text-center">
+                <h1 className="text-lg sm:text-2xl text-center">
                     إضـافـة أقـارب
                 </h1>
                 <div className="flex gap-4 items-center">
@@ -210,10 +210,10 @@ const AddRelativeForm = ({
                             !newRelative.relation ||
                             editRelationName
                         }
-                        className="!w-10 h-10 !p-0 justify-center items-center flex disabled:!opacity-40 disabled:!cursor-auto"
+                        className="!w-7 h-7 !p-0 justify-center items-center flex disabled:!opacity-40 disabled:!cursor-auto"
                         onClick={() => deleteRelation(newRelative.relation)}
                     >
-                        <img src={delete_icon} alt="" />
+                        <img src={delete_icon} className="!w-4 !h-4"/>
                     </button>
 
                     {/* close button */}
@@ -221,7 +221,7 @@ const AddRelativeForm = ({
                         src={close_icon}
                         alt="close"
                         title="close"
-                        className="cursor-pointer w-10 h-10"
+                        className="cursor-pointer w-7 h-7"
                         onClick={() => {
                             setOpen(false);
                             setNewRelative({
@@ -241,7 +241,6 @@ const AddRelativeForm = ({
 
             {editRelationName ? (
                 <Row className="mb-6 flex items-start">
-
                     {/* relation input */}
                     <Row error={error.relation}>
                         <Input
@@ -266,7 +265,7 @@ const AddRelativeForm = ({
 
                     {/* save edit button */}
                     <button
-                        className={`disabled:opacity-40 hover:!opacity-40 disabled:!cursor-default !w-auto !h-14 !aspect-square`}
+                        className={`disabled:opacity-40 hover:!opacity-40 disabled:!cursor-default !w-auto !h-10 md:!h-14 !p-2 !aspect-square`}
                         disabled={!newRelative.relation}
                         type="button"
                         onClick={() => editRelation(newRelative.relation)}
@@ -292,67 +291,69 @@ const AddRelativeForm = ({
             )}
             {/* Name Inputs Row */}
             <Row className="flex flex-col items-stretch sm:flex-row sm:items-start justify-between">
-                <Row error={error.relSurName}>
-                    <Input
-                        haserror={error.relSurName}
-                        disabled={
-                            newRelative.relation !== currentRelation ||
-                            editRelationName
-                        }
-                        name="relSurName"
-                        value={newRelative.relSurName}
-                        onChange={(e) =>
-                            setNewRelative({
-                                ...newRelative,
-                                relSurName: e.target.value,
-                            })
-                        }
-                        placeholder="اللقب"
-                        className="placeholder:text-center"
-                    />
-                </Row>
+                <div className="flex justify-between items-start gap-2">
+                    <Row error={error.relSurName}>
+                        <Input
+                            haserror={error.relSurName}
+                            disabled={
+                                newRelative.relation !== currentRelation ||
+                                editRelationName
+                            }
+                            name="relSurName"
+                            value={newRelative.relSurName}
+                            onChange={(e) =>
+                                setNewRelative({
+                                    ...newRelative,
+                                    relSurName: e.target.value,
+                                })
+                            }
+                            placeholder="اللقب"
+                            className="placeholder:text-center"
+                        />
+                    </Row>
 
-                <Row error={error.relName}>
-                    <Input
-                        haserror={error.relName}
-                        disabled={
-                            newRelative.relation !== currentRelation ||
-                            editRelationName
-                        }
-                        name="relName"
-                        value={newRelative.relName}
-                        onChange={(e) =>
-                            setNewRelative({
-                                ...newRelative,
-                                relName: e.target.value,
-                            })
-                        }
-                        placeholder="الاسم"
-                        className="placeholder:text-center"
-                        ref={relNameRef}
-                        autoFocus
-                    />
-                </Row>
+                    <Row error={error.relName}>
+                        <Input
+                            haserror={error.relName}
+                            disabled={
+                                newRelative.relation !== currentRelation ||
+                                editRelationName
+                            }
+                            name="relName"
+                            value={newRelative.relName}
+                            onChange={(e) =>
+                                setNewRelative({
+                                    ...newRelative,
+                                    relName: e.target.value,
+                                })
+                            }
+                            placeholder="الاسم"
+                            className="placeholder:text-center"
+                            ref={relNameRef}
+                            autoFocus
+                        />
+                    </Row>
 
-                <Row error={error.relLastName}>
-                    <Input
-                        haserror={error.relLastName}
-                        disabled={
-                            newRelative.relation !== currentRelation ||
-                            editRelationName
-                        }
-                        name="relLastName"
-                        value={newRelative.relLastName}
-                        onChange={(e) =>
-                            setNewRelative({
-                                ...newRelative,
-                                relLastName: e.target.value,
-                            })
-                        }
-                        placeholder="الكنية"
-                        className="placeholder:text-center"
-                    />
-                </Row>
+                    <Row error={error.relLastName}>
+                        <Input
+                            haserror={error.relLastName}
+                            disabled={
+                                newRelative.relation !== currentRelation ||
+                                editRelationName
+                            }
+                            name="relLastName"
+                            value={newRelative.relLastName}
+                            onChange={(e) =>
+                                setNewRelative({
+                                    ...newRelative,
+                                    relLastName: e.target.value,
+                                })
+                            }
+                            placeholder="الكنية"
+                            className="placeholder:text-center"
+                        />
+                    </Row>
+                </div>
 
                 {/* Add Relative Button */}
                 <button
@@ -360,7 +361,7 @@ const AddRelativeForm = ({
                         newRelative.relation !== currentRelation ||
                         editRelationName
                     }
-                    className="!w-auto !h-14 !aspect-square disabled:!opacity-40 disabled:!cursor-auto disabled:hover:!opacity-30 flex justify-center"
+                    className="!w-auto !h-10 md:!h-14 !p-3 !aspect-square disabled:!opacity-40 disabled:!cursor-auto disabled:hover:!opacity-30 flex justify-center"
                     type="button"
                     onClick={addRelative}
                 >

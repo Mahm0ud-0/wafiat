@@ -165,7 +165,12 @@ const Form1 = ({ data, setData, errors }) => {
                         type="text"
                         name="surName"
                         value={data.surName}
-                        onChange={(e) => setData("surName", e.target.value)}
+                        onChange={(e) =>
+                            setData(
+                                "surName",
+                                e.target.value ? e.target.value : null
+                            )
+                        }
                         placeholder={
                             data.gender === "female"
                                 ? "لقب الفقيدة"

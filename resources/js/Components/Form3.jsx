@@ -80,11 +80,24 @@ const Form3 = ({ data, setData, errors }) => {
                     {/* date */}
                     <Input
                         haserror={errors.menDate}
-                        type="date"
+                        type="text"
                         name="menDate"
                         placeholder="تاريخ التعزية"
                         value={data.menDate}
                         onChange={(e) => setData("menDate", e.target.value)}
+                        onFocus={(e) => {
+                            e.target.type = "date";
+                            e.currentTarget.showPicker();
+                        }}
+                        onClick={(e) => {
+                            if (e.target.type !== "date")
+                                e.target.type = "date";
+                            e.currentTarget.showPicker();
+                        }}
+                        onBlur={(e) => {
+                            e.target.type = "text";
+                            e.target.value = data.dateOfDeath;
+                        }}
                     />
                 </Row>
                 <Row error={errors.menNumOfDays}>
@@ -145,7 +158,7 @@ const Form3 = ({ data, setData, errors }) => {
                         name="womenPlace"
                         placeholder="مكان التعزية"
                         value={data.womenPlace}
-                        onChange={(e) => setData("womenPlace", e.target.value)}
+                        onChange={(e) => setData("womenPlace", e.target.value ? e.target.value : null)}
                     />
                 </Row>
                 <Row
@@ -159,18 +172,31 @@ const Form3 = ({ data, setData, errors }) => {
                         name="womenTime"
                         placeholder="توقيت التعزية"
                         value={data.womenTime}
-                        onChange={(e) => setData("womenTime", e.target.value)}
+                        onChange={(e) => setData("womenTime",e.target.value ? e.target.value : null)}
                     />
                 </Row>
                 <Row error={errors.womenDate}>
                     {/* date */}
                     <Input
                         haserror={errors.womenDate}
-                        type="date"
+                        type="text"
                         name="womenDate"
                         placeholder="تاريخ التعزية"
                         value={data.womenDate}
-                        onChange={(e) => setData("womenDate", e.target.value)}
+                        onChange={(e) => setData("womenDate",e.target.value ? e.target.value : null)}
+                        onFocus={(e) => {
+                            e.target.type = "date";
+                            e.currentTarget.showPicker();
+                        }}
+                        onClick={(e) => {
+                            if (e.target.type !== "date")
+                                e.target.type = "date";
+                            e.currentTarget.showPicker();
+                        }}
+                        onBlur={(e) => {
+                            e.target.type = "text";
+                            e.target.value = data.dateOfDeath;
+                        }}
                     />
                 </Row>
                 <Row error={errors.womenNumOfDays}>
@@ -182,7 +208,7 @@ const Form3 = ({ data, setData, errors }) => {
                         placeholder="عدد الأيام"
                         value={data.womenNumOfDays}
                         onChange={(e) => {
-                            setData("womenNumOfDays", e.target.value);
+                            setData("womenNumOfDays", e.target.value ? e.target.value : null);
                             console.log(e.target.value, "w # days change");
                         }}
                     />

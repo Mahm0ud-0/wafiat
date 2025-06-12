@@ -20,7 +20,7 @@ const Modal = ({ open, onClose, className, children }) => {
                 onClick={(e) => e.stopPropagation()}
                 // style={{width: "400px"}}
                 className={`
-                bg-bg rounded-xl p-6 transition-all overflow-auto 
+                bg-bg rounded-xl p-4 md:p-5 transition-all overflow-auto 
                 ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}
                 ${className}`}
             >

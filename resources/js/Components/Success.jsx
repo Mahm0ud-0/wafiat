@@ -80,7 +80,7 @@ const Success = ({ data, reset, setSuccessful }) => {
                     <Naweh data={data} />
                 </div>
 
-            <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2">
+            <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2 justify-items-center">
                 <button onClick={backToHomePage} className="btn-ghost">
                     الرئيسية
                 </button>

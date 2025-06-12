@@ -46,9 +46,9 @@ const Details = () => {
                         {features.map((item) => (
                             <div
                                 key={item.title}
-                                className="flex flex-col items-center space-y-4 p-4 px-4 bg-bg/40 border-primary/20 hover:bg-bg/80 hover:border-bg border aspect-square rounded-lg h-[300px] w-full"
+                                className="flex flex-col justify-center items-center p-2 px-4 bg-bg/40 border-primary/20 hover:bg-bg/80 hover:border-bg border aspect-square rounded-lg h-[300px] w-full"
                             >
-                                <div className="w-1/2 flex justify-center pb-4 border-b-2 border-secondary">
+                                <div className="w-1/2 flex justify-center pb-2">
                                     <img
                                         src={item.icon}
                                         alt="icon"

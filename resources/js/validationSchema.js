@@ -65,26 +65,44 @@ const step2Schema = Yup.object().shape({
 
 const step3Schema = Yup.object().shape({
     // men
-    menPlace: Yup.string().min(15).required("هذا الحقل مطلوب"),
-    menTime: Yup.string().min(20).required("هذا الحقل مطلوب"),
+    menPlace: Yup.string()
+        .min(15, "يجب أن يكون مكان التعزية 15 حرفاً على الأقل")
+        .required("هذا الحقل مطلوب"),
+    menTime: Yup.string()
+        .min(20, "يجب أن يكون مكان التعزية 20 حرفاً على الأقل")
+        .required("هذا الحقل مطلوب"),
     menDate: Yup.date()
         .typeError("يجب أن يكون تاريخ الجنازة تاريخًا صحيحًا")
         .required("هذا الحقل مطلوب"),
     menNumOfDays: Yup.number()
         .required("هذا الحقل مطلوب")
+        .max(4)
         .typeError("يجب أن يكون العمر رقمًا")
         .integer("يجب أن يكون العمر عددًا صحيحًا")
         .positive("يجب أن يكون العمر عددًا موجبًا"),
 
     // women
-    womenPlace: Yup.string().required("هذا الحقل مطلوب"),
-    womenTime: Yup.string().min(20).required("هذا الحقل مطلوب"),
+    womenPlace: Yup.string()
+        .nullable()
+        .optional()
+        .notRequired()
+        .min(15, "يجب أن يكون مكان التعزية 15 حرفاً على الأقل"),
+    womenTime: Yup.string()
+        .nullable()
+        .optional()
+        .notRequired()
+        .min(20, "يجب أن يكون مكان التعزية 20 حرفاً على الأقل"),
     womenDate: Yup.date()
         .typeError("يجب أن يكون تاريخ الجنازة تاريخًا صحيحًا")
-        .required("هذا الحقل مطلوب"),
+        .nullable()
+        .optional()
+        .notRequired(),
     womenNumOfDays: Yup.number()
-        .required("هذا الحقل مطلوب")
-        .typeError("يجب أن يكون العمر رقمًا")
+        .nullable()
+        .optional()
+        .notRequired()
+        .max(4)
+        .typeError("يجب أن يكون رقمًا")
         .integer("يجب أن يكون العمر عددًا صحيحًا")
         .positive("يجب أن يكون العمر عددًا موجبًا"),
 });

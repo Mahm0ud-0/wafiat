@@ -154,7 +154,7 @@ const Form5 = ({ data, setData }) => {
             <Modal
                 open={open}
                 onClose={closeRelativeForm}
-                className="w-[90%] lg:w-fit"
+                className="w-full sm:w-[90%] h-full sm:h-auto lg:w-fit"
             >
                 <AddRelativeForm
                     open={open}
@@ -180,8 +180,13 @@ const Form5 = ({ data, setData }) => {
                     setPreveiw(false);
                 }}
                 onClick={() => setPreveiw(false)}
-                className="w-[90%] max-w-[440px] !p-3"
+                className="w-full sm:w-[90%] h-full sm:h-auto max-w-[440px] !p-3 flex flex-col items-end gap-2"
             >
+                <img
+                    src={close_icon}
+                    alt="close"
+                    onClick={() => setPreveiw(false)}
+                />
                 <Naweh data={data} />
             </Modal>
 
