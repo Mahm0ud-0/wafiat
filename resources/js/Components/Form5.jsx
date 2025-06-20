@@ -168,6 +168,7 @@ const Form5 = ({ data, setData }) => {
                     currentRelation={currentRelation}
                     setCurrentRelation={setCurrentRelation}
                     addNew={addNew}
+                    setAddNew={setAddNew}
                     error={error}
                     setError={setError}
                 />

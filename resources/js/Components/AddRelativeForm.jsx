@@ -23,6 +23,7 @@ const AddRelativeForm = ({
     currentRelation,
     setCurrentRelation,
     addNew,
+    setAddNew,
     error,
     setError,
 }) => {
@@ -269,7 +270,10 @@ const AddRelativeForm = ({
                         className={`disabled:opacity-40 hover:!opacity-40 disabled:!cursor-default !w-auto !h-10 md:!h-14 !p-2 !aspect-square`}
                         disabled={!newRelative.relation}
                         type="button"
-                        onClick={() => editRelation(newRelative.relation)}
+                        onClick={() => {
+                            editRelation(newRelative.relation);
+                            setAddNew(false)
+                        }}
                     >
                         <img src={tick} alt="" className="" />
                     </button>

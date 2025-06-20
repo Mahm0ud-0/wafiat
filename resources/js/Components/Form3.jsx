@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Row from "./Row";
 import Input from "./Input";
 import StepContext from "../stepContext";
+import DateInput from "./DateInput";
 
 const Form3 = ({ data, setData, errors }) => {
     const { nextStep, prevStep } = useContext(StepContext);
@@ -55,25 +56,11 @@ const Form3 = ({ data, setData, errors }) => {
                     />
                 </Row>
                 <Row className="w-full" error={errors.funiralDate}>
-                    <Input
+                    <DateInput
                         haserror={errors.funiralDate}
-                        type="text"
                         name="funiralDate"
                         value={data.funiralDate}
                         onChange={(e) => setData("funiralDate", e.target.value)}
-                        onFocus={(e) => {
-                            e.target.type = "date";
-                            e.currentTarget.showPicker();
-                        }}
-                        onClick={(e) => {
-                            if (e.target.type !== "date")
-                                e.target.type = "date";
-                            e.currentTarget.showPicker();
-                        }}
-                        onBlur={(e) => {
-                            e.target.type = "text";
-                            e.target.value = data.dateOfDeath;
-                        }}
                         placeholder="تاريخ التشييع *"
                     />
                 </Row>
@@ -93,40 +80,6 @@ const Form3 = ({ data, setData, errors }) => {
                 />
             </Row>
 
-            {/* <Row
-                error={errors.menPlace}
-                example="مثال: صالة جامع الإيمان أيام الثلاثاء و الأربعاء و
-                        الخميس من الساعة 6:30 و حتى الساعة 9 مساءً"
-            >
-                <Input
-                    haserror={errors.menPlace}
-                    type="text"
-                    name="menPlace"
-                    value={data.menPlace}
-                    onChange={(e) => setData("menPlace", e.target.value)}
-                    placeholder={"التعزية للرجال"}
-                />
-            </Row>
-
-            <Row
-                error={errors.womenPlace}
-                example={
-                    data.gender === "female"
-                        ? "مثال: في منزل الفقيدة يومي الاحد و الاثنين من الساعة 12:30 و حتى الساعة 2 ظهراً"
-                        : data.gender === "male" &&
-                          "مثال: في منزل الفقيد يومي الاحد و الاثنين من الساعة 12:30 و حتى الساعة 2 ظهراً"
-                }
-            >
-                <Input
-                    haserror={errors.womenPlace}
-                    type="text"
-                    name="womenPlace"
-                    value={data.womenPlace}
-                    onChange={(e) => setData("womenPlace", e.target.value)}
-                    placeholder={"التعزية للنساء"}
-                />
-            </Row> */}
-            
             <Row>
                 <Input
                     type="text"

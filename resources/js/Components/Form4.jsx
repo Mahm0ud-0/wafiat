@@ -3,6 +3,7 @@ import Row from "./Row";
 import Input from "./Input";
 import Hr from "./Hr";
 import StepContext from "../stepContext";
+import DateInput from "./DateInput";
 
 const Form4 = ({ data, setData, errors }) => {
     const [menFold, setMenFold] = useState(false);
@@ -78,26 +79,12 @@ const Form4 = ({ data, setData, errors }) => {
                 </Row>
                 <Row error={errors.menDate}>
                     {/* date */}
-                    <Input
+                    <DateInput
                         haserror={errors.menDate}
-                        type="text"
                         name="menDate"
                         placeholder="تاريخ التعزية"
                         value={data.menDate}
                         onChange={(e) => setData("menDate", e.target.value)}
-                        onFocus={(e) => {
-                            e.target.type = "date";
-                            e.currentTarget.showPicker();
-                        }}
-                        onClick={(e) => {
-                            if (e.target.type !== "date")
-                                e.target.type = "date";
-                            e.currentTarget.showPicker();
-                        }}
-                        onBlur={(e) => {
-                            e.target.type = "text";
-                            e.target.value = data.dateOfDeath;
-                        }}
                     />
                 </Row>
                 <Row error={errors.menNumOfDays}>
@@ -187,9 +174,8 @@ const Form4 = ({ data, setData, errors }) => {
                 </Row>
                 <Row error={errors.womenDate}>
                     {/* date */}
-                    <Input
+                    <DateInput
                         haserror={errors.womenDate}
-                        type="text"
                         name="womenDate"
                         placeholder="تاريخ التعزية"
                         value={data.womenDate}
@@ -199,19 +185,6 @@ const Form4 = ({ data, setData, errors }) => {
                                 e.target.value ? e.target.value : null
                             )
                         }
-                        onFocus={(e) => {
-                            e.target.type = "date";
-                            e.currentTarget.showPicker();
-                        }}
-                        onClick={(e) => {
-                            if (e.target.type !== "date")
-                                e.target.type = "date";
-                            e.currentTarget.showPicker();
-                        }}
-                        onBlur={(e) => {
-                            e.target.type = "text";
-                            e.target.value = data.dateOfDeath;
-                        }}
                     />
                 </Row>
                 <Row error={errors.womenNumOfDays}>

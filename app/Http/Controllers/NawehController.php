@@ -41,8 +41,8 @@ class NawehController extends Controller
             'menDate' => 'required|date',
             'menNumOfDays' => 'required|integer|min:1|max:4',
             // women
-            'womenPlace' => 'nullable|string|min:25',
-            'womenTime' => 'nullable|string|min:25',
+            'womenPlace' => 'nullable|string|min:15',
+            'womenTime' => 'nullable|string|min:20',
             'womenDate' => 'nullable|date',
             'womenNumOfDays' => 'nullable|integer|min:1|max:4',
 

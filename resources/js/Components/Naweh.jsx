@@ -45,7 +45,7 @@ const Naweh = ({ data }) => {
     }, [data.womenDate, data.womenNumOfDays]);
 
     const containerRef = useRef(null);
-    const [fontSize, setFontSize] = useState(10); // font size for relatives starting with 12px font size
+    const [fontSize, setFontSize] = useState(10); // font size for relatives starting with 10px font size
 
     // observe the height of relatives div to set the fontsize
     useEffect(() => {
@@ -56,7 +56,7 @@ const Naweh = ({ data }) => {
                 const { height } = entry.contentRect;
                 // formula: as the container gets taller, reduce font size.
                 // here we set a minimum value of 10px.
-                const newFontSize = Math.max(8, 10 - height / 40);
+                const newFontSize = Math.max(10, 10 - height / 40);
                 setFontSize(newFontSize);
             }
         });
@@ -124,9 +124,9 @@ const Naweh = ({ data }) => {
                 ))}
             </div>
 
-            {/* و عموم آل كذا و كذا */}
-            <div className="pb-2 flex-1 flex flex-col justify-evenly">
-                <h1 className="font-bold text-center text-[1em] my-1">
+            <div className="pb-2 flex flex-col justify-evenly gap-1">
+                {/* و عموم آل كذا و كذا */}
+                <h1 className="font-bold text-center text-[0.8em] my-1">
                     وعموم آل{" "}
                     {data.lastNames.map((el, index) => (
                         <span key={el}>
@@ -138,7 +138,7 @@ const Naweh = ({ data }) => {
                     ))}
                 </h1>
 
-                <h1 className="text-center text-[0.75em]">
+                <h1 className="text-center text-[0.5em]">
                     ينعون إليكم بمزيد من الرضى و التسليم وفاة
                     {data.gender == "male"
                         ? " فقيدهم المرحوم "
@@ -150,19 +150,19 @@ const Naweh = ({ data }) => {
 
                 {/* name and surname */}
                 <div>
-                    <h1 className="text-[1em] text-center font-bold my-2 mb-1">
+                    <h1 className="text-[0.9em] text-center font-bold my-1">
                         {data.title || ""} {data.name} {data.fatherName || ""}{" "}
                         {data.lastName}
                     </h1>
                     {data.surName && (
-                        <h2 className="text-center text-[0.75em] mb-2 font-semibold">
+                        <h2 className="text-center text-[0.5em] font-semibold">
                             ( {data.surName} )
                         </h2>
                     )}
                 </div>
 
                 {/* burial place */}
-                <p className="text-center text-[0.5em]  md:text-2xs">
+                <p className="text-center text-[0.5em]">
                     و سيشيع{" "}
                     {data.gender == "male"
                         ? "جثمانه"
@@ -172,13 +172,13 @@ const Naweh = ({ data }) => {
                     الطاهر {data.bodyPlace} و ذالك في يوم {funiralDay}{" "}
                     {data.funiralDate}
                     {"مـ "}
-                    {/* {data.dateOfDeath2
-        ? "و الموافق " + data.dateOfDeath2 + "هـ "
-        : ""} */}
+                    {data.dateOfDeath2
+                        ? "و الموافق " + data.dateOfDeath2 + "هـ "
+                        : ""}
                     إلى {data.cemetery}
                 </p>
 
-                <h3 className="text-center text-[0.75em] mx-auto border border-black rounded-xs w-fit my-2 py-2 px-6 font-bold">
+                <h3 className="text-center text-[0.6em] mx-auto border border-black rounded-xs w-fit py-2 px-6 font-bold">
                     {data.gender == "male"
                         ? "حــيــث يــوارى الــثــرى"
                         : data.gender == "female"
@@ -187,7 +187,7 @@ const Naweh = ({ data }) => {
                 </h3>
 
                 {/* prayer */}
-                <p className="mt-1 text-[0.6em] flex gap-2">
+                <p className="mt-1 text-[0.55em] flex gap-2">
                     <span className="font-bold text-nowrap">
                         {data.gender == "male"
                             ? "الــصــلاة عــلــيـــه: "
@@ -197,7 +197,7 @@ const Naweh = ({ data }) => {
                 </p>
 
                 {/* condolences */}
-                <p className="text-[0.6em] flex gap-2">
+                <p className="text-[0.55em] flex gap-2">
                     <span className="font-bold text-nowrap">
                         الـتـعزيـة للـرجـال:{" "}
                     </span>
@@ -205,7 +205,7 @@ const Naweh = ({ data }) => {
                 </p>
 
                 {data.womenPlace && (
-                    <p className="text-[0.6em] flex gap-2">
+                    <p className="text-[0.55em] flex gap-2">
                         <span className="font-bold text-nowrap">
                             الـتـعزيـة للـنـسـاء:{" "}
                         </span>

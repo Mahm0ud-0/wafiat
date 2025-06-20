@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Row from "./Row";
 import Input from "./Input";
 import StepContext from "../stepContext";
+import DateInput from "./DateInput";
 
 const Form2 = ({ data, setData, errors }) => {
     const { nextStep, prevStep } = useContext(StepContext);
@@ -9,14 +10,20 @@ const Form2 = ({ data, setData, errors }) => {
     const hijriDate = (date) => {
         const d = new Date(date);
 
-        return d
-            .toLocaleDateString("en-u-ca-islamic", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-            })
-            .replace(/\//g, "-")
-            .replace(/[^\d-]/g, "");
+        if (isNaN(d.getTime())) {
+            return "";
+        }
+        const hijriString = d.toLocaleDateString("en-u-ca-islamic", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        });
+
+        const [day, month, year] = hijriString
+            .replace(/[^\d/]/g, "") // ensure only digits and slashes
+            .split("/");
+
+        return `${year}-${month}-${day}`; // return in YYYY-MM-DD format
     };
 
     return (
@@ -170,9 +177,8 @@ const Form2 = ({ data, setData, errors }) => {
             </Row>
 
             <Row error={errors.dateOfDeath}>
-                <Input
+                <DateInput
                     haserror={errors.dateOfDeath}
-                    type="text"
                     name="dateOfDeath"
                     value={data.dateOfDeath}
                     onChange={(e) => {
@@ -180,18 +186,6 @@ const Form2 = ({ data, setData, errors }) => {
                         setData("dateOfDeath2", hijriDate(e.target.value));
                     }}
                     placeholder="تاريخ الوفاة *"
-                    onFocus={(e) => {
-                        e.target.type = "date";
-                        e.currentTarget.showPicker();
-                    }}
-                    onClick={(e) => {
-                        if (e.target.type !== "date") e.target.type = "date";
-                        e.currentTarget.showPicker();
-                    }}
-                    onBlur={(e) => {
-                        e.target.type = "text";
-                        e.target.value = data.dateOfDeath;
-                    }}
                 />
             </Row>
 
