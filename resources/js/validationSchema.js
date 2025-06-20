@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const step1Schema = Yup.object().shape({
+const step2Schema = Yup.object().shape({
     name: Yup.string()
         .min(2, "يجب أن يحتوي الاسم على 2 حرف على الأقل")
         .max(25, "يجب ألا يزيد الاسم عن 25 حرفًا")
@@ -17,6 +17,7 @@ const step1Schema = Yup.object().shape({
         .required("هذا الحقل مطلوب"),
 
     surName: Yup.string()
+        .transform((value) => (value === "" ? null : value))
         .nullable()
         .optional()
         .notRequired()
@@ -24,6 +25,7 @@ const step1Schema = Yup.object().shape({
         .max(25, "يجب ألا يزيد اللقب عن 25 حرفًا"),
 
     title: Yup.string()
+        .transform((value) => (value === "" ? null : value))
         .nullable()
         .optional()
         .notRequired()
@@ -50,7 +52,7 @@ const step1Schema = Yup.object().shape({
         }),
 });
 
-const step2Schema = Yup.object().shape({
+const step3Schema = Yup.object().shape({
     bodyPlace: Yup.string().required("هذا الحقل مطلوب"),
 
     cemetery: Yup.string().required("هذا الحقل مطلوب"),
@@ -63,10 +65,10 @@ const step2Schema = Yup.object().shape({
     prayer: Yup.string().required("هذا الحقل مطلوب"),
 });
 
-const step3Schema = Yup.object().shape({
+const step4Schema = Yup.object().shape({
     // men
     menPlace: Yup.string()
-        .min(15, "يجب أن يكون مكان التعزية 15 حرفاً على الأقل")
+        .min(10, "يجب أن يكون مكان التعزية 10 حرفاً على الأقل")
         .required("هذا الحقل مطلوب"),
     menTime: Yup.string()
         .min(20, "يجب أن يكون مكان التعزية 20 حرفاً على الأقل")
@@ -83,21 +85,29 @@ const step3Schema = Yup.object().shape({
 
     // women
     womenPlace: Yup.string()
+        .transform((value) => (value === "" ? null : value))
         .nullable()
         .optional()
         .notRequired()
         .min(15, "يجب أن يكون مكان التعزية 15 حرفاً على الأقل"),
     womenTime: Yup.string()
+        .transform((value) => (value === "" ? null : value))
         .nullable()
         .optional()
         .notRequired()
         .min(20, "يجب أن يكون مكان التعزية 20 حرفاً على الأقل"),
     womenDate: Yup.date()
-        .typeError("يجب أن يكون تاريخ الجنازة تاريخًا صحيحًا")
+        .transform((value, originalValue) => {
+            return originalValue === "" ? null : value;
+        })
         .nullable()
+        .typeError("يجب أن يكون تاريخ الجنازة تاريخًا صحيحًا")
         .optional()
         .notRequired(),
     womenNumOfDays: Yup.number()
+        .transform((value, originalValue) => {
+            return originalValue === "" ? null : value;
+        })
         .nullable()
         .optional()
         .notRequired()
@@ -135,4 +145,4 @@ const relSchema = Yup.object().shape({
         .required("هذا الحقل مطلوب"),
 });
 
-export { step1Schema, step2Schema, step3Schema, relSchema };
+export { step2Schema, step3Schema, step4Schema, relSchema };

@@ -31,11 +31,12 @@ const AddRelativeForm = ({
     const [editRelationName, setEditRelationName] = useState();
 
     const editRelation = () => {
-        // TODO: insure that newRelation does not exist in relations array
         if (newRelative.relation === currentRelation) {
             setEditRelationName(false);
             return;
         }
+
+        // insure that newRelation does not exist in relations array
         if (relations.includes(newRelative.relation)) {
             setError((prev) => ({
                 ...prev,
@@ -213,7 +214,7 @@ const AddRelativeForm = ({
                         className="!w-7 h-7 !p-0 justify-center items-center flex disabled:!opacity-40 disabled:!cursor-auto"
                         onClick={() => deleteRelation(newRelative.relation)}
                     >
-                        <img src={delete_icon} className="!w-4 !h-4"/>
+                        <img src={delete_icon} className="!w-4 !h-4" />
                     </button>
 
                     {/* close button */}
@@ -239,7 +240,7 @@ const AddRelativeForm = ({
 
             {/* Relation Input Row */}
 
-            {editRelationName ? (
+            {addNew || editRelationName ? (
                 <Row className="mb-6 flex items-start">
                     {/* relation input */}
                     <Row error={error.relation}>
@@ -361,7 +362,7 @@ const AddRelativeForm = ({
                         newRelative.relation !== currentRelation ||
                         editRelationName
                     }
-                    className="!w-auto !h-10 md:!h-14 !p-3 !aspect-square disabled:!opacity-40 disabled:!cursor-auto disabled:hover:!opacity-30 flex justify-center"
+                    className="!w-auto !h-10 md:!h-14 !aspect-square disabled:!opacity-40 disabled:!cursor-auto disabled:hover:!opacity-30 flex justify-center items-center"
                     type="button"
                     onClick={addRelative}
                 >

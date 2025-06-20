@@ -1,5 +1,5 @@
 import { createContext, useCallback, useMemo, useState } from "react";
-import { step1Schema, step2Schema, step3Schema } from "./validationSchema";
+import { step2Schema, step3Schema, step4Schema } from "./validationSchema";
 
 const StepContext = createContext();
 
@@ -8,12 +8,12 @@ export const StepProvider = ({ children, data, setError, clearErrors }) => {
 
     const validateStep = useCallback(() => {
         try {
-            if (step === 1) {
-                step1Schema.validateSync(data, { abortEarly: false });
-            } else if (step === 2) {
+            if (step === 2) {
                 step2Schema.validateSync(data, { abortEarly: false });
             } else if (step === 3) {
                 step3Schema.validateSync(data, { abortEarly: false });
+            } else if (step === 4) {
+                step4Schema.validateSync(data, { abortEarly: false });
             }
             return true; // Validation passed
         } catch (validationError) {

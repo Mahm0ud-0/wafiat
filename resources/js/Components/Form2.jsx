@@ -5,150 +5,230 @@ import StepContext from "../stepContext";
 
 const Form2 = ({ data, setData, errors }) => {
     const { nextStep, prevStep } = useContext(StepContext);
+
+    const hijriDate = (date) => {
+        const d = new Date(date);
+
+        return d
+            .toLocaleDateString("en-u-ca-islamic", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+            })
+            .replace(/\//g, "-")
+            .replace(/[^\d-]/g, "");
+    };
+
     return (
         <div
-            className="space-y-6"
+            className="space-y-3 sm:space-y-6"
             onKeyDown={(event) => {
                 if (event.key === "Enter") {
                     nextStep();
                 }
             }}
         >
-            <Row
-                error={errors.bodyPlace}
-                example={
-                    data.gender === "female"
-                        ? "مثال: من منزلها الكائن في حي المرابط"
-                        : data.gender === "male" &&
-                          "مثال: من منزله الكائن في حي المرابط"
-                }
-            >
-                <Input
-                    autoFocus
-                    haserror={errors.bodyPlace}
-                    type="text"
-                    name="bodyPlace"
-                    value={data.bodyPlace}
-                    onChange={(e) => setData("bodyPlace", e.target.value)}
-                    placeholder={
-                        data.gender === "female"
-                            ? "من أين سيشيع جثمانها ؟ *"
-                            : data.gender === "male" &&
-                              "من أين سيشيع جثمانه ؟ *"
-                    }
-                />
+            {/* gender */}
+            <Row>
+                <p className="w-3/4 mx-auto py-2 text-lg flex-1">
+                    {data.gender === "female" && "الفقيدة:"}
+                    {data.gender === "male" && "الفقيد:"}
+                </p>
+                <div className="flex justify-end w-full sm:flex-1">
+                    <label htmlFor="male" className="w-1/3 cursor-pointer">
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="male"
+                            value="male"
+                            onChange={(e) => setData("gender", e.target.value)}
+                            checked={data.gender === "male"}
+                            className="hidden"
+                        />
+                        <div
+                            className={`px-2 py-2 bg-primary/5 rounded-r-lg text-center font-bold ${
+                                data.gender === "male"
+                                    ? "bg-primary/100 text-bg"
+                                    : "hover:bg-primary/10 text-primary/50"
+                            }`}
+                        >
+                            ذكـر
+                        </div>
+                    </label>
+                    <label htmlFor="female" className="w-1/3 cursor-pointer">
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="female"
+                            value="female"
+                            onChange={(e) => setData("gender", e.target.value)}
+                            checked={data.gender === "female"}
+                            className="hidden"
+                        />
+                        <div
+                            className={`px-2 py-2 bg-primary/5 rounded-l-lg text-center font-bold ${
+                                data.gender === "female"
+                                    ? "bg-primary/100 text-bg"
+                                    : "hover:bg-primary/10 text-primary/50"
+                            }`}
+                        >
+                            أنـثـى
+                        </div>
+                    </label>
+                </div>
             </Row>
 
-            <Row className="justify-between items-start">
+            <Row className="justify-between items-start flex-col sm:flex-row">
+                {/* first name */}
+                <Row error={errors.name}>
+                    <Input
+                        autoFocus
+                        haserror={errors.name}
+                        type="text"
+                        name="name"
+                        value={data.name}
+                        onChange={(e) => setData("name", e.target.value)}
+                        placeholder={
+                            data.gender === "female"
+                                ? "اسم الفقيدة *"
+                                : data.gender === "male" && "اسم الفقيد *"
+                        }
+                    />
+                </Row>
+
+                {/* father name */}
+                <Row error={errors.fatherName}>
+                    <Input
+                        haserror={errors.fatherName}
+                        type="text"
+                        name="fatherName"
+                        value={data.fatherName}
+                        onChange={(e) => setData("fatherName", e.target.value)}
+                        placeholder="اسم الأب *"
+                    />
+                </Row>
+                {/* last name */}
+                <Row error={errors.lastName}>
+                    <Input
+                        haserror={errors.lastName}
+                        type="text"
+                        name="lastName"
+                        value={data.lastName}
+                        onChange={(e) => setData("lastName", e.target.value)}
+                        placeholder="الكنية *"
+                    />
+                </Row>
+            </Row>
+
+            <Row className="justify-between items-start flex-col sm:flex-row">
                 <Row
+                    error={errors.title}
                     className="w-full"
-                    example="مثال: مقبرة الخضراء"
-                    error={errors.cemetery}
+                    example={
+                        data.gender === "female"
+                            ? "مثال: الحاجة ، الدكتورة ..."
+                            : data.gender === "male" &&
+                              "مثال: الحاج ، الدكتور ..."
+                    }
                 >
                     <Input
-                        haserror={errors.cemetery}
+                        haserror={errors.title}
                         type="text"
-                        name="cemetery"
-                        value={data.cemetery}
-                        onChange={(e) => setData("cemetery", e.target.value)}
-                        placeholder="المقبرة *"
+                        name="title"
+                        value={data.title}
+                        onChange={(e) => setData("title", e.target.value)}
+                        placeholder={
+                            data.gender === "female"
+                                ? " صفة الفقيدة"
+                                : data.gender === "male" && " صفة الفقيد"
+                        }
                     />
                 </Row>
-                <Row className="w-full" error={errors.funiralDate}>
+
+                <Row
+                    className="w-full"
+                    error={errors.surName}
+                    example={
+                        data.gender === "female"
+                            ? "مثال: أم فلان"
+                            : data.gender === "male" && "مثال: أبو فلان"
+                    }
+                >
                     <Input
-                        haserror={errors.funiralDate}
+                        haserror={errors.surName}
                         type="text"
-                        name="funiralDate"
-                        value={data.funiralDate}
-                        onChange={(e) => setData("funiralDate", e.target.value)}
-                        onFocus={(e) => {
-                            e.target.type = "date";
-                            e.currentTarget.showPicker();
-                        }}
-                        onClick={(e) => {
-                            if (e.target.type !== "date")
-                                e.target.type = "date";
-                            e.currentTarget.showPicker();
-                        }}
-                        onBlur={(e) => {
-                            e.target.type = "text";
-                            e.target.value = data.dateOfDeath;
-                        }}
-                        placeholder="تاريخ التشييع *"
+                        name="surName"
+                        value={data.surName}
+                        onChange={(e) => setData("surName", e.target.value)}
+                        placeholder={
+                            data.gender === "female"
+                                ? "لقب الفقيدة"
+                                : data.gender === "male" && "لقب الفقيد"
+                        }
                     />
                 </Row>
             </Row>
 
-            <Row
-                example="مثال: في مسجد محمد الحامد بعد صلاة الظهر"
-                error={errors.prayer}
-            >
+            <Row error={errors.dateOfDeath}>
                 <Input
-                    haserror={errors.prayer}
+                    haserror={errors.dateOfDeath}
                     type="text"
-                    name="prayer"
-                    value={data.prayer}
-                    onChange={(e) => setData("prayer", e.target.value)}
-                    placeholder={"موعد و معلومات صلاة الجنازة *"}
+                    name="dateOfDeath"
+                    value={data.dateOfDeath}
+                    onChange={(e) => {
+                        setData("dateOfDeath", e.target.value);
+                        setData("dateOfDeath2", hijriDate(e.target.value));
+                    }}
+                    placeholder="تاريخ الوفاة *"
+                    onFocus={(e) => {
+                        e.target.type = "date";
+                        e.currentTarget.showPicker();
+                    }}
+                    onClick={(e) => {
+                        if (e.target.type !== "date") e.target.type = "date";
+                        e.currentTarget.showPicker();
+                    }}
+                    onBlur={(e) => {
+                        e.target.type = "text";
+                        e.target.value = data.dateOfDeath;
+                    }}
                 />
             </Row>
 
-            {/* <Row
-                error={errors.menPlace}
-                example="مثال: صالة جامع الإيمان أيام الثلاثاء و الأربعاء و
-                        الخميس من الساعة 6:30 و حتى الساعة 9 مساءً"
-            >
-                <Input
-                    haserror={errors.menPlace}
-                    type="text"
-                    name="menPlace"
-                    value={data.menPlace}
-                    onChange={(e) => setData("menPlace", e.target.value)}
-                    placeholder={"التعزية للرجال"}
-                />
-            </Row>
-
-            <Row
-                error={errors.womenPlace}
-                example={
-                    data.gender === "female"
-                        ? "مثال: في منزل الفقيدة يومي الاحد و الاثنين من الساعة 12:30 و حتى الساعة 2 ظهراً"
-                        : data.gender === "male" &&
-                          "مثال: في منزل الفقيد يومي الاحد و الاثنين من الساعة 12:30 و حتى الساعة 2 ظهراً"
-                }
-            >
-                <Input
-                    haserror={errors.womenPlace}
-                    type="text"
-                    name="womenPlace"
-                    value={data.womenPlace}
-                    onChange={(e) => setData("womenPlace", e.target.value)}
-                    placeholder={"التعزية للنساء"}
-                />
-            </Row> */}
-            
             <Row>
                 <Input
+                    disabled
                     type="text"
-                    name="info"
-                    value={data.info}
-                    onChange={(e) => setData("info", e.target.value)}
-                    placeholder={"معلومات إضافية في تذييل النعوة"}
+                    name="dateOfDeath2"
+                    value={data.dateOfDeath2}
+                    // onChange={(e) => setData("dateOfDeath2", e.target.value)}
+                    max={new Date().toISOString().split("T")[0]}
+                    placeholder="تاريخ الوفاة الموافق هجري"
+                />
+            </Row>
+
+            <Row error={errors.age}>
+                <Input
+                    haserror={errors.age}
+                    type="number"
+                    name="age"
+                    value={data.age}
+                    onChange={(e) => setData("age", e.target.value)}
+                    placeholder="العمر"
                 />
             </Row>
 
             {/* buttons */}
             <Row className="!justify-end mt-16">
                 <button
-                    className={`btn-ghost `}
+                    className={`btn-ghost`}
                     onClick={prevStep}
                     type="button"
                 >
                     السابق
                 </button>
-
                 <button
-                    className=" !bg-primary !border-primary text-bg"
+                    className="!bg-primary !border-primary text-bg"
                     onClick={nextStep}
                     type="button"
                 >

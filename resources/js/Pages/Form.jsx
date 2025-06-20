@@ -1,11 +1,11 @@
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm, usePage } from "@inertiajs/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Steps from "../Components/Steps";
 import { StepProvider } from "../stepContext";
-import Form1 from "../Components/Form1";
-import Form2 from "../Components/Form2";
-import Form3 from "../Components/Form3";
-import Form4 from "../Components/Form4";
+import Form1 from "../Components/Form2";
+import Form2 from "../Components/Form3";
+import Form3 from "../Components/Form4";
+import Form4 from "../Components/Form1";
 import Form5 from "../Components/Form5";
 import Heading from "../Components/Heading";
 import Success from "../Components/Success";
@@ -27,8 +27,8 @@ const Form = () => {
         name: "",
         fatherName: "",
         lastName: "",
-        title: null,
-        surName: null,
+        title: "",
+        surName: "",
         dateOfDeath: "",
         dateOfDeath2: "",
         age: "",
@@ -39,16 +39,18 @@ const Form = () => {
         menPlace: "",
         menTime: "",
         menDate: "",
-        menNumOfDays: null,
-        womenPlace: null,
-        womenTime: null,
-        womenDate: null,
-        womenNumOfDays: null,
+        menNumOfDays: "",
+        womenPlace: "",
+        womenTime: "",
+        womenDate: "",
+        womenNumOfDays: "",
         info: "",
         template: "",
         relatives: [],
         lastNames: [],
     });
+
+    const pageErrs = usePage().props.errors;
 
     const [successful, setSuccessful] = useState(false);
 
@@ -62,6 +64,13 @@ const Form = () => {
         },
         [post]
     );
+
+    // Sync errors from page props to useForm
+    useEffect(() => {
+        if (pageErrs) {
+            setError(pageErrs);
+        }
+    }, [pageErrs]);
 
     useEffect(() => {
         if (data) setSuccessful(false);
@@ -78,7 +87,7 @@ const Form = () => {
 
     return (
         <div className="text-primary py-10 space-y-10 bg-[url(/resources/images/mosque.png)] min-h-screen bg-fixed bg-primary/10 bg-bottom">
-            <Head title="إنشاء نعوة"/>
+            <Head title="إنشاء نعوة" />
             <StepProvider {...stepContextProps}>
                 {successful ? (
                     <Success

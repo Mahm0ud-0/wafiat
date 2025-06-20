@@ -71,7 +71,7 @@ const Naweh = ({ data }) => {
     return (
         <div
             style={{
-                backgroundImage: `url(${data.template.path})`,
+                backgroundImage: `url(${data.template})`,
                 containerType: "inline-size",
                 fontSize: "clamp(4px, 3cqw, 18px)",
             }}

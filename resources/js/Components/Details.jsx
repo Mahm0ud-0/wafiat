@@ -32,7 +32,7 @@ const Details = () => {
 
     return (
         <section className="text-center bg-bg bg-[url(/resources/images/mosque.png)] !w-full bg-bottom bg-cover py-10">
-            <div className="w-4/5 mx-auto space-y-10">
+            <div className="w-4/5 mx-auto space-y-10 flex flex-col items-center">
                 {/* title */}
                 <div className="space-y-4">
                     <h1 className="text-4xl">مع تطبيق الوفيات</h1>

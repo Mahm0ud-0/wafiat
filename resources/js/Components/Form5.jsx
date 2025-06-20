@@ -185,6 +185,7 @@ const Form5 = ({ data, setData }) => {
                 <img
                     src={close_icon}
                     alt="close"
+                    className="cursor-pointer"
                     onClick={() => setPreveiw(false)}
                 />
                 <Naweh data={data} />

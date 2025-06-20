@@ -1,90 +1,66 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Row from "./Row";
 import Input from "./Input";
-import Hr from "./Hr";
 import StepContext from "../stepContext";
 
 const Form3 = ({ data, setData, errors }) => {
-    const [menFold, setMenFold] = useState(false);
-    const [womenFold, setWomenFold] = useState(true);
-
     const { nextStep, prevStep } = useContext(StepContext);
     return (
         <div
-            className="space-y-10"
+            className="space-y-6"
             onKeyDown={(event) => {
                 if (event.key === "Enter") {
                     nextStep();
                 }
             }}
         >
-            {/* men condolences */}
-            <div
-                className={`flex flex-col gap-5 overflow-hidden ${
-                    menFold ? "h-12" : "h-auto"
-                }`}
+            <Row
+                error={errors.bodyPlace}
+                example={
+                    data.gender === "female"
+                        ? "مثال: من منزلها الكائن في حي المرابط"
+                        : data.gender === "male" &&
+                          "مثال: من منزله الكائن في حي المرابط"
+                }
             >
-                <div
-                    className="flex justify-between cursor-pointer"
-                    onClick={() => setMenFold((prev) => !prev)}
-                >
-                    <h1 className="text-xl">التعزية للرجال</h1>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={`cursor-pointer ${
-                            menFold ? "-rotate-90" : "rotate-90"
-                        }`}
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M15 6l-6 6l6 6" />
-                    </svg>
-                </div>
+                <Input
+                    autoFocus
+                    haserror={errors.bodyPlace}
+                    type="text"
+                    name="bodyPlace"
+                    value={data.bodyPlace}
+                    onChange={(e) => setData("bodyPlace", e.target.value)}
+                    placeholder={
+                        data.gender === "female"
+                            ? "من أين سيشيع جثمانها ؟ *"
+                            : data.gender === "male" &&
+                              "من أين سيشيع جثمانه ؟ *"
+                    }
+                />
+            </Row>
+
+            <Row className="justify-between items-start">
                 <Row
-                    example="مثال: صالة جامع محمد الحامد"
-                    error={errors.menPlace}
+                    className="w-full"
+                    example="مثال: مقبرة الخضراء"
+                    error={errors.cemetery}
                 >
-                    {/* place */}
                     <Input
-                        autoFocus
-                        haserror={errors.menPlace}
+                        haserror={errors.cemetery}
                         type="text"
-                        name="menPlace"
-                        placeholder="مكان التعزية"
-                        value={data.menPlace}
-                        onChange={(e) => setData("menPlace", e.target.value)}
+                        name="cemetery"
+                        value={data.cemetery}
+                        onChange={(e) => setData("cemetery", e.target.value)}
+                        placeholder="المقبرة *"
                     />
                 </Row>
-                <Row
-                    example="مثال: من الساعة 7:30 و حتى الساعة 10 مساءً"
-                    error={errors.menTime}
-                >
-                    {/* time */}
+                <Row className="w-full" error={errors.funiralDate}>
                     <Input
-                        haserror={errors.menTime}
+                        haserror={errors.funiralDate}
                         type="text"
-                        name="menTime"
-                        placeholder="توقيت التعزية"
-                        value={data.menTime}
-                        onChange={(e) => setData("menTime", e.target.value)}
-                    />
-                </Row>
-                <Row error={errors.menDate}>
-                    {/* date */}
-                    <Input
-                        haserror={errors.menDate}
-                        type="text"
-                        name="menDate"
-                        placeholder="تاريخ التعزية"
-                        value={data.menDate}
-                        onChange={(e) => setData("menDate", e.target.value)}
+                        name="funiralDate"
+                        value={data.funiralDate}
+                        onChange={(e) => setData("funiralDate", e.target.value)}
                         onFocus={(e) => {
                             e.target.type = "date";
                             e.currentTarget.showPicker();
@@ -98,122 +74,68 @@ const Form3 = ({ data, setData, errors }) => {
                             e.target.type = "text";
                             e.target.value = data.dateOfDeath;
                         }}
+                        placeholder="تاريخ التشييع *"
                     />
                 </Row>
-                <Row error={errors.menNumOfDays}>
-                    {/* # of days */}
-                    <Input
-                        haserror={errors.menNumOfDays}
-                        type="number"
-                        name="menNumOfDays"
-                        placeholder="عدد الأيام"
-                        value={data.menNumOfDays}
-                        onChange={(e) =>
-                            setData("menNumOfDays", e.target.value)
-                        }
-                    />
-                </Row>
-            </div>
+            </Row>
 
-            <Hr />
-
-            {/* women condolences */}
-            <div
-                className={`flex flex-col gap-5 overflow-hidden ${
-                    womenFold ? "h-12" : "h-auto"
-                }`}
+            <Row
+                example="مثال: في مسجد محمد الحامد بعد صلاة الظهر"
+                error={errors.prayer}
             >
-                <div
-                    className="flex justify-between cursor-pointer"
-                    onClick={() => setWomenFold((prev) => !prev)}
-                >
-                    <h1 className="text-xl">التعزية للنساء</h1>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={`cursor-pointer ${
-                            womenFold ? "-rotate-90" : "rotate-90"
-                        }`}
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M15 6l-6 6l6 6" />
-                    </svg>
-                </div>
+                <Input
+                    haserror={errors.prayer}
+                    type="text"
+                    name="prayer"
+                    value={data.prayer}
+                    onChange={(e) => setData("prayer", e.target.value)}
+                    placeholder={"موعد و معلومات صلاة الجنازة *"}
+                />
+            </Row>
 
-                <Row
-                    example="مثال: صالة جامع محمد الحامد"
-                    error={errors.womenPlace}
-                >
-                    {/* place */}
-                    <Input
-                        haserror={errors.womenPlace}
-                        type="text"
-                        name="womenPlace"
-                        placeholder="مكان التعزية"
-                        value={data.womenPlace}
-                        onChange={(e) => setData("womenPlace", e.target.value ? e.target.value : null)}
-                    />
-                </Row>
-                <Row
-                    example="مثال: من الساعة 7:30 و حتى الساعة 10 مساءً"
-                    error={errors.womenTime}
-                >
-                    {/* time */}
-                    <Input
-                        haserror={errors.womenTime}
-                        type="text"
-                        name="womenTime"
-                        placeholder="توقيت التعزية"
-                        value={data.womenTime}
-                        onChange={(e) => setData("womenTime",e.target.value ? e.target.value : null)}
-                    />
-                </Row>
-                <Row error={errors.womenDate}>
-                    {/* date */}
-                    <Input
-                        haserror={errors.womenDate}
-                        type="text"
-                        name="womenDate"
-                        placeholder="تاريخ التعزية"
-                        value={data.womenDate}
-                        onChange={(e) => setData("womenDate",e.target.value ? e.target.value : null)}
-                        onFocus={(e) => {
-                            e.target.type = "date";
-                            e.currentTarget.showPicker();
-                        }}
-                        onClick={(e) => {
-                            if (e.target.type !== "date")
-                                e.target.type = "date";
-                            e.currentTarget.showPicker();
-                        }}
-                        onBlur={(e) => {
-                            e.target.type = "text";
-                            e.target.value = data.dateOfDeath;
-                        }}
-                    />
-                </Row>
-                <Row error={errors.womenNumOfDays}>
-                    {/* # of days */}
-                    <Input
-                        haserror={errors.womenNumOfDays}
-                        type="number"
-                        name="womenNumOfDays"
-                        placeholder="عدد الأيام"
-                        value={data.womenNumOfDays}
-                        onChange={(e) => {
-                            setData("womenNumOfDays", e.target.value ? e.target.value : null);
-                            console.log(e.target.value, "w # days change");
-                        }}
-                    />
-                </Row>
-            </div>
+            {/* <Row
+                error={errors.menPlace}
+                example="مثال: صالة جامع الإيمان أيام الثلاثاء و الأربعاء و
+                        الخميس من الساعة 6:30 و حتى الساعة 9 مساءً"
+            >
+                <Input
+                    haserror={errors.menPlace}
+                    type="text"
+                    name="menPlace"
+                    value={data.menPlace}
+                    onChange={(e) => setData("menPlace", e.target.value)}
+                    placeholder={"التعزية للرجال"}
+                />
+            </Row>
+
+            <Row
+                error={errors.womenPlace}
+                example={
+                    data.gender === "female"
+                        ? "مثال: في منزل الفقيدة يومي الاحد و الاثنين من الساعة 12:30 و حتى الساعة 2 ظهراً"
+                        : data.gender === "male" &&
+                          "مثال: في منزل الفقيد يومي الاحد و الاثنين من الساعة 12:30 و حتى الساعة 2 ظهراً"
+                }
+            >
+                <Input
+                    haserror={errors.womenPlace}
+                    type="text"
+                    name="womenPlace"
+                    value={data.womenPlace}
+                    onChange={(e) => setData("womenPlace", e.target.value)}
+                    placeholder={"التعزية للنساء"}
+                />
+            </Row> */}
+            
+            <Row>
+                <Input
+                    type="text"
+                    name="info"
+                    value={data.info}
+                    onChange={(e) => setData("info", e.target.value)}
+                    placeholder={"معلومات إضافية في تذييل النعوة"}
+                />
+            </Row>
 
             {/* buttons */}
             <Row className="!justify-end mt-16">

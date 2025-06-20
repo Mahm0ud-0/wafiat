@@ -1,7 +1,7 @@
 const Row = ({ children, example, error, className }) => {
     return (
         <div
-            className={`${className} mx-auto w-full flex items-center justify-evenly gap-2 ${
+            className={`${className} mx-auto w-full flex items-center justify-evenly gap-4 ${
                 (error || example) && "flex-col items-start !gap-1 group"
             }`}
         >
