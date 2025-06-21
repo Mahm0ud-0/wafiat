@@ -2,11 +2,6 @@ import { Head, useForm, usePage } from "@inertiajs/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Steps from "../Components/Steps";
 import { StepProvider } from "../stepContext";
-import Form1 from "../Components/Form2";
-import Form2 from "../Components/Form3";
-import Form3 from "../Components/Form4";
-import Form4 from "../Components/Form1";
-import Form5 from "../Components/Form5";
 import Heading from "../Components/Heading";
 import Success from "../Components/Success";
 import ActiveStep from "../Components/ActiveStep";
@@ -85,9 +80,8 @@ const Form = () => {
             e.preventDefault();
             post(baseURL + "/new-naweh", {
                 onSuccess: () => {
-                    localStorage.removeItem("localData");
-                    reset();
                     setSuccessful(true);
+                    localStorage.removeItem("localData");
                 },
                 onError: (errors) => console.error("Failed:", errors),
             });
@@ -101,10 +95,6 @@ const Form = () => {
     //         setError(pageErrs);
     //     }
     // }, [pageErrs]);
-
-    useEffect(() => {
-        if (data) setSuccessful(false);
-    }, [data]);
 
     // Utility to check if any essential field has meaningful (non-empty) data.
     const hasData = (data) => {
@@ -138,7 +128,6 @@ const Form = () => {
                         <button
                             className="btn-ghost"
                             onClick={() => {
-                                setShouldRestore(false);
                                 setAsktoRestore(false);
                                 clearLocalData();
                             }}
