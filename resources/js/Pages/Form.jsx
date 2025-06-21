@@ -11,6 +11,7 @@ import Heading from "../Components/Heading";
 import Success from "../Components/Success";
 import ActiveStep from "../Components/ActiveStep";
 import { baseURL } from "../helpers";
+import Modal from "../Components/Modal";
 
 const Form = () => {
     const {
@@ -54,11 +55,40 @@ const Form = () => {
 
     const [successful, setSuccessful] = useState(false);
 
+    const [askToRestore, setAsktoRestore] = useState(
+        Boolean(localStorage.getItem("localData"))
+    );
+
+    // Save the current form data to localStorage whenever it changes.
+    useEffect(() => {
+        if (hasData(data)) {
+            localStorage.setItem("localData", JSON.stringify(data));
+        }
+    }, [data]);
+
+    const loadLocalData = () => {
+        const savedDraft = localStorage.getItem("localData");
+        if (savedDraft) {
+            try {
+                setData(JSON.parse(savedDraft));
+            } catch (err) {
+                console.error("Failed to parse saved draft:", err);
+            }
+        }
+    };
+    const clearLocalData = () => {
+        localStorage.removeItem("localData");
+    };
+
     const submit = useCallback(
         (e) => {
             e.preventDefault();
             post(baseURL + "/new-naweh", {
-                onSuccess: () => setSuccessful(true),
+                onSuccess: () => {
+                    localStorage.removeItem("localData");
+                    reset();
+                    setSuccessful(true);
+                },
                 onError: (errors) => console.error("Failed:", errors),
             });
         },
@@ -66,15 +96,26 @@ const Form = () => {
     );
 
     // Sync errors from page props to useForm
-    useEffect(() => {
-        if (pageErrs) {
-            setError(pageErrs);
-        }
-    }, [pageErrs]);
+    // useEffect(() => {
+    //     if (pageErrs) {
+    //         setError(pageErrs);
+    //     }
+    // }, [pageErrs]);
 
     useEffect(() => {
         if (data) setSuccessful(false);
     }, [data]);
+
+    // Utility to check if any essential field has meaningful (non-empty) data.
+    const hasData = (data) => {
+        const essentialKeys = ["name", "fatherName", "dateOfDeath", "cemetery"];
+        return essentialKeys.some((key) => {
+            const value = data[key];
+            return typeof value === "string"
+                ? value.trim() !== ""
+                : Boolean(value);
+        });
+    };
 
     const stepContextProps = useMemo(
         () => ({
@@ -86,8 +127,35 @@ const Form = () => {
     );
 
     return (
-        <div className="text-primary py-10 space-y-10 bg-[url(/resources/images/mosque.png)] min-h-screen bg-fixed bg-primary/10 bg-bottom">
+        <div className="text-primary py-10 bg-[url(/resources/images/mosque.png)] min-h-screen bg-fixed bg-primary/10 bg-bottom">
             <Head title="إنشاء نعوة" />
+            <Modal open={askToRestore} onClose={() => setAsktoRestore(false)}>
+                <div className="flex flex-col justify-between gap-10 py-10 px-5">
+                    <h1 className="text-xl">
+                        هل تريد متابعة كتابة النعوة السابقة؟
+                    </h1>
+                    <div className="flex gap-6">
+                        <button
+                            className="btn-ghost"
+                            onClick={() => {
+                                setShouldRestore(false);
+                                setAsktoRestore(false);
+                                clearLocalData();
+                            }}
+                        >
+                            لا
+                        </button>
+                        <button
+                            onClick={() => {
+                                setAsktoRestore(false);
+                                loadLocalData();
+                            }}
+                        >
+                            نعم
+                        </button>
+                    </div>
+                </div>
+            </Modal>
             <StepProvider {...stepContextProps}>
                 {successful ? (
                     <Success

@@ -6,7 +6,7 @@ const Steps = () => {
     const steps = [1, 2, 3, 4, 5, 6];
     return (
         <div className="relative md:w-2/3 mx-auto mb-10">
-            <div className="flex justify-between relative z-10">
+            <div className="flex justify-between relative z-2">
                 {steps.map((step) => (
                     <div
                         key={step}

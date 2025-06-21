@@ -22,7 +22,11 @@ const Form1 = ({ data, setData }) => {
         },
     ];
 
-    const [design, setDesign] = useState(1);
+    const currentTemplate = templates.find(
+        (el) => el.path === data.template
+    )?.id;
+
+    const [design, setDesign] = useState(currentTemplate ?? 1);
 
     useEffect(() => {
         setData("template", templates.find((tmplt) => tmplt.id == design).path);
