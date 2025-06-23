@@ -84,7 +84,7 @@ const Form4 = ({ data, setData, errors }) => {
                         name="menDate"
                         placeholder="تاريخ التعزية"
                         value={data.menDate}
-                        onChange={(e) => setData("menDate", e.target.value)}
+                        onChange={(date) => setData("menDate", date)}
                     />
                 </Row>
                 <Row error={errors.menNumOfDays}>
@@ -179,11 +179,8 @@ const Form4 = ({ data, setData, errors }) => {
                         name="womenDate"
                         placeholder="تاريخ التعزية"
                         value={data.womenDate}
-                        onChange={(e) =>
-                            setData(
-                                "womenDate",
-                                e.target.value ? e.target.value : null
-                            )
+                        onChange={(date) =>
+                            setData("womenDate", date ? date : null)
                         }
                     />
                 </Row>

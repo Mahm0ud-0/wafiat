@@ -3,31 +3,26 @@ import Naweh from "./Naweh";
 import StepContext from "../stepContext";
 import Row from "./Row";
 import { publicURL, dummyData } from "../helpers";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { baseURL } from "../helpers";
 
 const Form1 = ({ data, setData }) => {
     const { nextStep } = useContext(StepContext);
 
-    const templates = [
-        {
-            id: 1,
-            title: "قالب 1",
-            path: publicURL + "/storage/designs/Doc1.jpg",
-        },
-        {
-            id: 2,
-            title: "قالب 2",
-            path: publicURL + "/storage/designs/Doc2.jpg",
-        },
-    ];
+    const templates = usePage().props.templates;
 
-    const currentTemplate = templates.find(
-        (el) => el.path === data.template
-    )?.id;
+    const [design, setDesign] = useState(
+        templates.find((el) => el.path === data.template)?.id ?? templates[0].id
+    );
 
-    const [design, setDesign] = useState(currentTemplate ?? 1);
+    // Update design state when data.template changes (e.g., when loading a saved draft)
+    useEffect(() => {
+        setDesign(
+            templates.find((tmplt) => tmplt.path === data.template)?.id ?? 1
+        );
+    }, [data.template]);
 
+    // update data template when changed by user input
     useEffect(() => {
         setData("template", templates.find((tmplt) => tmplt.id == design).path);
         dummyData.template = templates.find((tmplt) => tmplt.id == design).path;

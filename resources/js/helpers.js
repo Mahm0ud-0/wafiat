@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 export const baseURL = "/project/public";
 export const publicURL = "/project/public";
@@ -42,6 +42,35 @@ export let dummyData = {
         },
     ],
     lastNames: ["الفلاني", "العلاني"],
+};
+
+// function to check if any essential field has meaningful (non-empty) data.
+export const hasData = (data) => {
+    const essentialKeys = ["name", "fatherName", "dateOfDeath", "cemetery"];
+    return essentialKeys.some((key) => {
+        const value = data[key];
+        return typeof value === "string" ? value.trim() !== "" : Boolean(value);
+    });
+};
+
+// function to convert date to islamic (hijri) date
+export const hijriDate = (date) => {
+    const d = new Date(date);
+
+    if (isNaN(d.getTime())) {
+        return "";
+    }
+    const hijriString = d.toLocaleDateString("en-u-ca-islamic", {
+        year: "numeric",
+        day: "2-digit",
+        month: "2-digit",
+    });
+
+    const [month, day, year] = hijriString
+        .replace(/[^\d/]/g, "") // ensure only digits and slashes
+        .split("/");
+
+    return `${year}-${month}-${day}`; // return in YYYY-MM-DD format
 };
 
 // this function generates condolences string

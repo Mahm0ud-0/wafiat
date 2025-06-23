@@ -19,6 +19,7 @@
         "html-to-image": "^1.11.13",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
+        "react-flatpickr": "^4.0.10",
         "yup": "^1.6.1"
     }
 }

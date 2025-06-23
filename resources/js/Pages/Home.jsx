@@ -1,4 +1,4 @@
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import React from "react";
 import Header from "../Components/Header";
 import Hero from "../Components/Hero";
@@ -8,6 +8,7 @@ import Hr from "../Components/Hr";
 import Footer from "../Components/Footer";
 
 const Home = () => {
+
     return (
         <main className="pt-20">
             <Head title="الرئيسية" />

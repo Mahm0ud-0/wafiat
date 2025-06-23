@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { generateDays } from "../helpers";
+import { generateDays, hijriDate } from "../helpers";
 
 const Naweh = ({ data }) => {
     // group relatives according to their last names
@@ -169,12 +169,17 @@ const Naweh = ({ data }) => {
                         : data.gender == "female"
                         ? "جثمانها"
                         : ""}{" "}
-                    الطاهر {data.bodyPlace} و ذالك في يوم {funiralDay}{" "}
+                    الطاهر {data.bodyPlace} و ذلك في يوم {funiralDay}{" "}
                     {data.funiralDate}
                     {"مـ "}
-                    {data.dateOfDeath2
-                        ? "و الموافق " + data.dateOfDeath2 + "هـ "
-                        : ""}
+                    {data.funiralDate ? (
+                        <>
+                            و الموافق <span>{hijriDate(data.funiralDate)}</span>{" "}
+                            هـ{" "}
+                        </>
+                    ) : (
+                        ""
+                    )}
                     إلى {data.cemetery}
                 </p>
 

@@ -3,28 +3,10 @@ import Row from "./Row";
 import Input from "./Input";
 import StepContext from "../stepContext";
 import DateInput from "./DateInput";
+import { hijriDate } from "../helpers";
 
 const Form2 = ({ data, setData, errors }) => {
     const { nextStep, prevStep } = useContext(StepContext);
-
-    const hijriDate = (date) => {
-        const d = new Date(date);
-
-        if (isNaN(d.getTime())) {
-            return "";
-        }
-        const hijriString = d.toLocaleDateString("en-u-ca-islamic", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-        });
-
-        const [day, month, year] = hijriString
-            .replace(/[^\d/]/g, "") // ensure only digits and slashes
-            .split("/");
-
-        return `${year}-${month}-${day}`; // return in YYYY-MM-DD format
-    };
 
     return (
         <div
@@ -181,9 +163,9 @@ const Form2 = ({ data, setData, errors }) => {
                     haserror={errors.dateOfDeath}
                     name="dateOfDeath"
                     value={data.dateOfDeath}
-                    onChange={(e) => {
-                        setData("dateOfDeath", e.target.value);
-                        setData("dateOfDeath2", hijriDate(e.target.value));
+                    onChange={(date) => {
+                        setData("dateOfDeath", date);
+                        setData("dateOfDeath2", hijriDate(date));
                     }}
                     placeholder="تاريخ الوفاة *"
                 />

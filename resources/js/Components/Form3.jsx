@@ -60,7 +60,7 @@ const Form3 = ({ data, setData, errors }) => {
                         haserror={errors.funiralDate}
                         name="funiralDate"
                         value={data.funiralDate}
-                        onChange={(e) => setData("funiralDate", e.target.value)}
+                        onChange={(date) => setData("funiralDate", date)}
                         placeholder="تاريخ التشييع *"
                     />
                 </Row>

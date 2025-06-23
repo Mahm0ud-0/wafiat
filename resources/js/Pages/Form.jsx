@@ -5,7 +5,7 @@ import { StepProvider } from "../stepContext";
 import Heading from "../Components/Heading";
 import Success from "../Components/Success";
 import ActiveStep from "../Components/ActiveStep";
-import { baseURL } from "../helpers";
+import { baseURL, hasData } from "../helpers";
 import Modal from "../Components/Modal";
 
 const Form = () => {
@@ -45,8 +45,6 @@ const Form = () => {
         relatives: [],
         lastNames: [],
     });
-
-    const pageErrs = usePage().props.errors;
 
     const [successful, setSuccessful] = useState(false);
 
@@ -89,24 +87,6 @@ const Form = () => {
         [post]
     );
 
-    // Sync errors from page props to useForm
-    // useEffect(() => {
-    //     if (pageErrs) {
-    //         setError(pageErrs);
-    //     }
-    // }, [pageErrs]);
-
-    // Utility to check if any essential field has meaningful (non-empty) data.
-    const hasData = (data) => {
-        const essentialKeys = ["name", "fatherName", "dateOfDeath", "cemetery"];
-        return essentialKeys.some((key) => {
-            const value = data[key];
-            return typeof value === "string"
-                ? value.trim() !== ""
-                : Boolean(value);
-        });
-    };
-
     const stepContextProps = useMemo(
         () => ({
             setError,
@@ -119,6 +99,8 @@ const Form = () => {
     return (
         <div className="text-primary py-10 bg-[url(/resources/images/mosque.png)] min-h-screen bg-fixed bg-primary/10 bg-bottom">
             <Head title="إنشاء نعوة" />
+
+            {/* modal to ask to use the saved draft */}
             <Modal open={askToRestore} onClose={() => setAsktoRestore(false)}>
                 <div className="flex flex-col justify-between gap-10 py-10 px-5">
                     <h1 className="text-xl">

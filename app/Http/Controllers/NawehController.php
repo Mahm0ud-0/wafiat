@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Naweh;
+use App\Models\Template;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -13,7 +14,7 @@ class NawehController extends Controller
 {
     public function create()
     {
-        return Inertia::render('Form');
+        return Inertia::render('Form', ['templates' => Template::all()]);
     }
 
     public function store(Request $request)
@@ -109,10 +110,8 @@ class NawehController extends Controller
             }
         });
 
-        // redirect
-        // return redirect()->back()->with('success', 'تم إنشاء النعوة بنجاح');
         return Inertia::render('Form', [
-            'successful' => true
+            'successful' => true,
         ]);
     }
 }
